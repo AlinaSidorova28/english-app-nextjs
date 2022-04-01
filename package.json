@@ -6,19 +6,59 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ./**/** -c .eslintrc.json --ext js,jsx,tsx,ts > ./eslint-report.log",
+    "lint-fix": "eslint ./**/** -c .eslintrc.json --fix --ext ./**/*.ts*",
+    "stylelint": "stylelint **/*.*css > ./stylelint-report.log",
+    "stylelint:fix": "stylelint **/*.*css --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './commitlint.js'"
+    }
+  },
+  "lint-staged": {
+    " *.(js|jsx|ts|tsx)": [
+      "npm run lint-fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "next": "12.1.4",
+    "next-compose-plugins": "^2.2.1",
+    "next-images": "^1.8.4",
     "react": "18.0.0",
     "react-dom": "18.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^27.4.1",
     "@types/node": "17.0.23",
     "@types/react": "17.0.43",
     "@types/react-dom": "17.0.14",
+    "@types/react-redux": "^7.1.23",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "antd": "^4.19.3",
     "eslint": "8.12.0",
     "eslint-config-next": "12.1.4",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "html-react-parser": "^1.4.10",
+    "husky": "^7.0.4",
+    "immer": "^9.0.12",
+    "ravendb": "^5.2.2",
+    "react-redux": "^7.2.7",
+    "react-tabs": "^4.2.0",
+    "react-tooltip": "^4.2.21",
+    "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1",
+    "sass": "^1.49.10",
+    "stylelint": "^14.6.1",
+    "stylelint-order": "^5.0.0",
+    "swr": "^1.2.2",
+    "ts-loader": "^9.2.8",
     "typescript": "4.6.3"
   }
 }

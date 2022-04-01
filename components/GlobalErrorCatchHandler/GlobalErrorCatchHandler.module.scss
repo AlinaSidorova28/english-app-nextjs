@@ -1,0 +1,21 @@
+.error {
+    padding: 100px;
+
+    span {
+        opacity: .6;
+    }
+}
+
+.chunksError {
+    padding: 50px;
+
+    .main {
+        font-size: 1.15rem;
+        margin-top: 10px;
+    }
+
+    .metaData {
+        font-style: italic;
+        margin-top: 20px;
+    }
+}

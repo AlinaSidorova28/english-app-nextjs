@@ -1,0 +1,17 @@
+.link {
+    color: var(--c-main-action-blue);
+    transition: color 0.3s ease;
+
+    &_interactive {
+        text-decoration: none;
+    }
+
+    &:hover {
+        color: var(--c-main-blue_hoverd);
+    }
+}
+
+.disable {
+    color: var(--c-tbl-text);
+    pointer-events: none;
+}
