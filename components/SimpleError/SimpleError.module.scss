@@ -1,0 +1,35 @@
+.simple_error {
+    border: 1px solid var(--c-status-reject);
+    color: var(--c-status-reject);
+    margin: 5px 0 1em;
+    padding: 5px;
+    width: auto;
+    word-break: break-word;
+
+    .copyText {
+        font-size: 20px;
+    }
+
+    .status_title {
+        margin-top: 10px;
+
+        h2 {
+            font-weight: bold;
+        }
+
+        h2, h3 {
+            display: inline-block;
+            margin: 0;
+        }
+    }
+
+    .host, .back {
+        font-size: .85em;
+    }
+
+    .data {
+        color: var(--c-tbl-text);
+        font-style: italic;
+        opacity: .8;
+    }
+}

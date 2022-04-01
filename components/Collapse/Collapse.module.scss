@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0 5px;
+
+    & > h4 {
+        margin: 0;
+    }
+}
+
+.separator {
+    border: none;
+    border-top: 1px solid var(--c-color-default-light);
+    color: var(--c-color-default-light);
+    margin: 0;
+}
+
+.interactive {
+    color: var(--c-tbl-text);
+    cursor: pointer;
+    transition: all .1s ease-in;
+
+    &:hover {
+        opacity: var(--opacity-strong);
+    }
+}
+
+.expandToggle {
+    font-size: .83em;
+    opacity: var(--opacity-middle);
+}

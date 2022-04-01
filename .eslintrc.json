@@ -1,0 +1,119 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "simple-import-sort",
+        "import"
+    ],
+    "rules": {
+        "curly": "error",
+        "max-len": [
+            "error", {
+            "code": 120,
+            "ignoreComments": true,
+            "ignoreUrls": true,
+            "ignoreStrings": true,
+            "ignoreTemplateLiterals": true
+        }],
+        "object-curly-spacing": [
+            "error", "always"
+        ],
+        "eol-last": "error",
+        "semi": "error",
+        "comma-dangle": [
+            "error", "always-multiline"
+        ],
+        "prefer-const": [
+            "error", { "destructuring": "all" }],
+        "padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": "*", "next": "return" },
+            { "blankLine": "always", "prev": "block-like", "next": "*" },
+            { "blankLine": "always", "prev": "block", "next": "*" }
+        ],
+        "no-else-return": [
+            "error", { "allowElseIf": false }],
+        "no-multi-spaces": "error",
+        "no-trailing-spaces": "error",
+        "no-multiple-empty-lines": [
+            "error", { "max": 1, "maxEOF": 0 }],
+        "no-debugger": "error",
+        "no-eval": "error",
+        "no-console": [
+            "error",
+            {
+                "allow": [
+                    "warn", "error", "info", "dir", "clear"
+                ]
+            }
+        ],
+        "no-dupe-args": "error",
+        "no-magic-numbers": [
+            "error", {
+            "ignore": [-1, 0, 1]
+        }],
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "none"
+            }
+        ],
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/member-delimiter-style": "error",
+        "@typescript-eslint/indent": [
+            "error", 4, { "ignoredNodes": [
+                "JSXAttribute"
+            ] }],
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "react/display-name": "off",
+        "react/prop-types": "off",
+        "react/no-unescaped-entities": "off",
+        "react/no-children-prop": "off",
+        "react/destructuring-assignment": [
+            "warn", "always", { "ignoreClassFields": true }],
+        "react/no-array-index-key": "warn",
+        "react/react-in-jsx-scope": "warn",
+        "react/jsx-key": "error",
+        "react/jsx-no-target-blank": "off",
+        "react/jsx-closing-bracket-location": [
+            "error", "after-props"
+        ],
+        "react/jsx-indent-props": [
+            "error", "first"
+        ],
+        "react/jsx-first-prop-new-line": [
+            "error", "never"
+        ],
+        "react/jsx-max-props-per-line": [
+            "error", { "when": "multiline" }],
+        "simple-import-sort/imports": "error",
+        "import/newline-after-import": "error",
+        "import/no-duplicates": "error"
+    },
+    "settings": {
+        "react": {
+            "pragma": "React",
+            "version": "detect"
+        }
+    }
+}
