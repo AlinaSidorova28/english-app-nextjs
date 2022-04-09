@@ -8,7 +8,13 @@ export default async function addWord() {
     const session = store.openSession('english-app');
 
     const word = new Word(
-        '1', 'iPhone XS', 999.99, 'USD', 64, 'Apple', true, 'date',
+        'a2-1-words',
+        1,
+        [
+            'a2-1-words-1.jpg',
+            'a2-1-words-2.jpg',
+            'a2-1-words-3.jpg',
+        ],
     );
 
     console.log(word);

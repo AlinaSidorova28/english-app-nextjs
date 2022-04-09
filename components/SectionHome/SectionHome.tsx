@@ -1,10 +1,8 @@
-import parse from 'html-react-parser';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { setConstants } from '../../reducers/constantsReducer';
-import { tasks } from '../../tasks';
 import { IStore } from '../../utils/store';
 
 interface ISectionHomeProps {
@@ -46,7 +44,7 @@ export const SectionHome: React.FC<ISectionHomeProps> = connect(mapStateToProps,
     return (
         <div className={className || ''}>
             {`${constants?.greeting}, Alina! Home page :D`}
-            {(tasks.a2[3].wb[9].content as string[]).map((el) => parse(el))}
+            {/*{(tasks.a2[3].wb[9].content as string[]).map((el) => parse(el))}*/}
             {/*<Button onClick={() => history.push('/welcome')}>Click</Button>*/}
             {/*<NavLink to={'/welcome'}>Click</NavLink>*/}
         </div>
