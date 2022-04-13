@@ -1,0 +1,16 @@
+.spinner {
+    display: inline-block;
+    overflow: hidden;
+
+    vertical-align: middle;
+
+    transform-origin: center;
+    animation: spinner 1s infinite linear;
+    stroke: #ffffff;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
