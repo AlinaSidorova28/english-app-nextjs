@@ -6,10 +6,12 @@ import * as reducers from '../reducers';
 
 interface IStore {
     Constants?: Record<string, any>;
+    Settings?: Record<string, any>;
 }
 
 const comReducers = combineReducers({
     Constants: reducers.constantsReducer,
+    Settings: reducers.settingsReducer,
 });
 
 const store = createStore(

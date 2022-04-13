@@ -1,3 +1,8 @@
+export enum LanguageType {
+    en = 'en',
+    ru = 'ru',
+}
+
 export enum taskTypes {
     MATCH = 'match',
     CHOOSE = 'choose',

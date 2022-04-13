@@ -24,5 +24,10 @@ const nextConfig = {
 
 module.exports = withPlugins([
     withImages,
+    {
+        images: {
+            disableStaticImages: true,
+        },
+    },
     { target: 'serverless' },
 ], nextConfig);

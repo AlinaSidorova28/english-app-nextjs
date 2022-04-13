@@ -1,0 +1,25 @@
+$width: 555px;
+$height: 1000px;
+$dark-pink: #ef717f;
+$light-pink: #f8adb1;
+
+.div-class
+{
+  border-radius: 6px;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.wrapper {
+  @extend .div-class;
+
+  padding: 0;
+  top: 265px;
+  display: inherit;
+  flex-direction: column;
+}

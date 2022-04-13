@@ -4,7 +4,6 @@ import documentStore from '../utils/documentStore';
 export default async function addTask() {
     const store = documentStore;
 
-    // documentStore.conventions.registerEntityType(Word);
     const session = store.openSession('english-app');
 
     const task = new Task(
