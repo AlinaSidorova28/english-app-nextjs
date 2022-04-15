@@ -1,4 +1,5 @@
 import '../styles/globals.scss';
+import 'antd/dist/antd.css';
 
 import App from 'next/app';
 import nookies from 'nookies';
@@ -18,8 +19,7 @@ class MyApp extends App {
 
         if (Component.getInitialProps) {
             pageProps = await Component.getInitialProps(ctx);
-            if (!nookies.get(ctx).sound || !nookies.get(ctx).music
-                || !nookies.get(ctx).language || !nookies.get(ctx).difficulty) {
+            if (!nookies.get(ctx).lang) {
                 nookies.set(ctx, 'lang', 'ru', { path: '/' });
                 ctx.req.headers.cookie = 'lang=ru';
             }

@@ -5,11 +5,9 @@ import AuthorizationForm from '../components/Form/AuthorizationForm';
 
 class Login extends React.PureComponent<{ lang: string }, any> {
     static async getInitialProps(ctx) {
-        const { language } = nookies.get(ctx);
+        const { lang } = nookies.get(ctx);
 
-        return {
-            lang: language,
-        };
+        return { lang };
     }
 
     render() {

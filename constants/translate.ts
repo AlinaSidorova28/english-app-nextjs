@@ -10,6 +10,7 @@ const textForApp = {
             'Input a value',
             'Password should contain not less than 8 characters, at least 1 digit, 1 lowercase character and 1 uppercase character',
             'Passwords should match',
+            'Coming soon! Check for updates :)',
         ],
         error: [
             'User doesn\'t exist',
@@ -44,6 +45,7 @@ const textForApp = {
             'Введите значение',
             'Пароль должен состоять не менее, чем из 8 знаков, содержать хотя бы 1 цифру, 1 маленькую букву и 1 большую',
             'Пароли должны совпадать',
+            'Уже скоро! Следите за обновлениями :)',
         ],
         error: [
             'Такого пользователя не существует',
