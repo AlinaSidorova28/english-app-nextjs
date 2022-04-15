@@ -19,7 +19,8 @@ a {
   text-decoration: none;
 }
 
-.dictionary {
+.dictionary,
+.rules {
   background: #f8f2ee;
   min-height: calc(100vh - 115px);
 
@@ -52,18 +53,22 @@ a {
     user-select: none;
   }
 
-  .a2-words {
+  .a2-words,
+  .a2-rules {
     color: #fff;
     background: #32bea6;
   }
-  .b1-words {
+  .b1-words,
+  .b1-rules {
     background: #ffd07d;
   }
-  .b2-words {
+  .b2-words,
+  .b2-rules {
     color: #fff;
     background: #8ba0ae;
   }
-  .it-words {
+  .it-words,
+  .it-rules {
     color: #fff;
     background: #25b6d2;
   }
@@ -98,7 +103,15 @@ a {
     background: #ffffff;
   }
 
-  .ant-menu-sub.ant-menu-inline > .ant-menu-item {
+  .ant-menu-sub.ant-menu-inline > .ant-menu-item.rules-item {
+    height: 100%;
+
+     span {
+      display: block;
+    }
+  }
+
+  .ant-menu-sub.ant-menu-inline > .ant-menu-item.words-item {
     height: 100%;
 
     span {
