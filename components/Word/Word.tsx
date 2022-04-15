@@ -3,9 +3,8 @@ import { Menu } from 'antd';
 import { SubMenu } from 'rc-menu';
 import React from 'react';
 
-import { UNITS_AMOUNT } from '../../constants/constants';
 import textForApp from '../../constants/translate';
-import { LanguageType } from '../../types/general';
+import { IWord, LanguageType } from '../../types/general';
 import { getModuleWords } from '../../utils/wordsControllers';
 import Spinner from '../Spinner/Spinner';
 import style from './Word.module.scss';
@@ -20,8 +19,6 @@ interface IWordState {
     isLoading: boolean;
     openKeys: any[];
 }
-
-const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
 
 export default class Word extends React.PureComponent<IWordProps, IWordState> {
     constructor(props) {
@@ -40,49 +37,39 @@ export default class Word extends React.PureComponent<IWordProps, IWordState> {
     getSectionWords = async () => {
         const { filter } = this.props;
         const content = await getModuleWords(filter);
-        const words = content?.words?.[0]?.content || [];
+        const words = content?.words || [];
 
         this.setState({ words, isLoading: false });
     };
 
     onOpenChange = (keys) => {
         const latestOpenKey = keys.find(key => this.state.openKeys.indexOf(key) === -1);
-        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            this.setState({ openKeys: keys });
-        } else {
-            this.setState({ openKeys: latestOpenKey ? [latestOpenKey] : [] });
-        }
+        this.setState({ openKeys: latestOpenKey ? [latestOpenKey] : [] });
     };
 
     render() {
         const { words, isLoading, openKeys } = this.state;
-        const { lang, filter } = this.props;
-        const comingSoon = <h3>{textForApp[lang].message[3]}</h3>;
+        const { lang } = this.props;
 
         if (isLoading) {
             return <Spinner />;
         }
 
         if (!words.length) {
-            return comingSoon;
+            return <h3>{textForApp[lang].message[3]}</h3>;
         }
 
         return (
             <div className={style.word}>
                 <Menu mode="inline" openKeys={openKeys} onOpenChange={this.onOpenChange.bind(this)} style={{ width: '100%' }}>
-                    {new Array(UNITS_AMOUNT).fill('Unit').map((el, index) => {
-                        return (
-                            <SubMenu key={`${el}-${index}`} title={`${el}-${index + 1}`}>
-                                <Menu.Item key={`item-${index + 1}`} disabled>
-                                    {words.map((el) => {
-                                        return (el.startsWith(`${filter}-${index + 1}`)
-                                            && <div className={style['word-image']} key={el}>
-                                                <img src={`/${el}`}/>
-                                            </div>);
-                                    })}
-                                </Menu.Item>
-                            </SubMenu>
-                        );
+                    {words.map((word: IWord, index) => {
+                        return (<SubMenu key={`Unit-${index}`} title={`Unit-${index + 1}`}>
+                            <Menu.Item className={'words-item'} key={`item-${index + 1}`} disabled>
+                                {word.content.map((img) => {
+                                    return (<img src={`/${img}`} key={img}/>);
+                                })}
+                            </Menu.Item>
+                        </SubMenu>);
                     })}
                 </Menu>
             </div>
