@@ -21,12 +21,7 @@ export enum Levels {
     A2 = 'a2',
     B1 = 'b1',
     B2 = 'b2',
-}
-
-// главный тип
-// достаем по ключу из Levels (tasks[Levels.A2])
-export type Tasks = {
-    [key in Levels]: Array<IUnit>;
+    IT = 'IT',
 }
 
 export type Rules = {

@@ -247,7 +247,6 @@ class AuthorizationForm extends React.PureComponent<IAuthorizationFormProps, IAu
                         <p className={`${style.error} ${!errorPlace ? style.hidden : ''}`}>{errorMessage}</p>
                         <button className={style[`button-${isForSignUp ? 'signup' : 'signin'}`]}
                                 type="submit">
-                                {/*value={isLoading ? <SimpleSpinner/> : text.toLowerCase()}>*/}
                             {isLoading ? <SimpleSpinner/> : text.toLowerCase()}
                         </button>
                     </form>

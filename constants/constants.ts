@@ -15,6 +15,9 @@ export const ONE_DAY = ONE_HOUR * 24;
 export const ONE_HOUR_IN_MINUTES = 60;
 export const ONE_WEEK_IN_DAYS = 7;
 export const DAYS_LABEL = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+export const UNITS_AMOUNT = 10;
+
+export const LEVELS = ['a2', 'b1', 'b2', 'IT'];
 
 export const RESPONSE_STATUSES = {
     CODE_200: 200,
