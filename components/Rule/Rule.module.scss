@@ -1,0 +1,15 @@
+.rule {
+  .image-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    img {
+      height: 100%;
+      max-width: 320px;
+    }
+  }
+
+  h2 {
+    border-bottom: 1px solid #c4c4c4;
+  }
+}
