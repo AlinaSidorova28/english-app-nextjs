@@ -62,7 +62,7 @@ export default class Rule extends React.PureComponent<IRuleProps, IRuleState> {
         return (
             <div className={style.rule}>
                 <Menu mode="inline" openKeys={openKeys} onOpenChange={this.onOpenChange.bind(this)} style={{ width: '100%' }}>
-                    {rules.map((rule, index) => {
+                    {rules.sort((a, b) => a.id.localeCompare(b.id)).map((rule, index) => {
                         return (<SubMenu key={`Unit-${index}`} title={`Unit-${index + 1}`}>
                             <Menu.Item className={'rules-item'} key={`item-${index + 1}`} disabled>
                                 {rule.unitRules.map((el: IRule) => {

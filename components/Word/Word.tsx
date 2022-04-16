@@ -62,7 +62,7 @@ export default class Word extends React.PureComponent<IWordProps, IWordState> {
         return (
             <div className={style.word}>
                 <Menu mode="inline" openKeys={openKeys} onOpenChange={this.onOpenChange.bind(this)} style={{ width: '100%' }}>
-                    {words.map((word: IWord, index) => {
+                    {words.sort((a, b) => a.id.localeCompare(b.id)).map((word: IWord, index) => {
                         return (<SubMenu key={`Unit-${index}`} title={`Unit-${index + 1}`}>
                             <Menu.Item className={'words-item'} key={`item-${index + 1}`} disabled>
                                 {word.content.map((img) => {
