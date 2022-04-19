@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Collapse } from '../Collapse/Collapse';
-import { Link } from '../Link/Link';
+import { CustomLink } from '../CustomLink/CustomLink';
 import { SimpleError } from '../SimpleError/SimpleError';
 import style from './GlobalErrorCatchHandler.module.scss';
 
@@ -40,9 +40,9 @@ export const ChunksErrorView = (error) => {
         <div className={style.main}>
             Пожалуйста, перезагрузите страницу. Если ошибка не устранилась, проверьте свое
             подключение.&nbsp;
-            <Link onClick={reloadLocation}>
+            <CustomLink onClick={reloadLocation}>
                 Перезагрузить сейчас
-            </Link>
+            </CustomLink>
         </div>
         <div className={style.metaData}>
             <div><b>path:</b> {location.href}</div>

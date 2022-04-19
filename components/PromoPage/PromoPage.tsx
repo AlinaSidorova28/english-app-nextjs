@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-const PromoPage = () => {
+const PromoPage = ({ lang }) => {
     return (
-        <div>Promo</div>
+        <div>Promo {lang}</div>
     );
 };
 

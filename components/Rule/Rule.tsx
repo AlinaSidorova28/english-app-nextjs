@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import { Menu } from 'antd';
 import { SubMenu } from 'rc-menu';
 import React from 'react';

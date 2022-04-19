@@ -3,7 +3,9 @@ import 'antd/dist/antd.css';
 
 import App from 'next/app';
 import nookies from 'nookies';
+import * as React from 'react';
 
+import Layout from '../components/Layout/Layout';
 import { initialSettings } from '../constants/constants';
 import { SettingsReducerState } from '../reducers/settingsReducer';
 import { LanguageType } from '../types/general';
@@ -48,7 +50,11 @@ class MyApp extends App {
     render() {
         const { Component, pageProps } = this.props;
 
-        return <Component {...pageProps} />;
+        return (
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        );
     }
 }
 

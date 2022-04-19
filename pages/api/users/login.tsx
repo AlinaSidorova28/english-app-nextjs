@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import nookies from 'nookies';

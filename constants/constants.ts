@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import { SettingsReducerState } from '../reducers/settingsReducer';
 import { LanguageType } from '../types/general';
 
