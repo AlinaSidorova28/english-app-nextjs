@@ -5,11 +5,11 @@ import { GlobalErrorCatchHandler } from '../components/GlobalErrorCatchHandler/G
 import { SectionHome } from '../components/SectionHome/SectionHome';
 import { store } from '../utils/store';
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ ...props }) => {
     return (
         <Provider store={store}>
             <GlobalErrorCatchHandler>
-                <SectionHome/>
+                <SectionHome props={props}/>
             </GlobalErrorCatchHandler>
         </Provider>
     );

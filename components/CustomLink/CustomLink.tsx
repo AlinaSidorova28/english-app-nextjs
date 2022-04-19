@@ -1,6 +1,6 @@
 import React from 'react';
 
-import style from './Link.module.scss';
+import style from './CustomLink.module.scss';
 
 interface ILinkProps {
     href?: string;
@@ -12,7 +12,7 @@ interface ILinkProps {
     disablePreventDefault?: boolean;
 }
 
-export class Link extends React.Component<ILinkProps, any> {
+export class CustomLink extends React.Component<ILinkProps, any> {
     constructor(props: ILinkProps) {
         super(props);
     }

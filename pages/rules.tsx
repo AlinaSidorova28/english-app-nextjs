@@ -1,4 +1,3 @@
-import nookies from 'nookies';
 import React, { PureComponent } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
@@ -20,12 +19,6 @@ export default class Dictionary extends PureComponent<IRulesProps, IRulesState> 
         this.state = {
             isLoading: true,
         };
-    }
-
-    static async getInitialProps(ctx) {
-        const { lang } = nookies.get(ctx);
-
-        return { lang };
     }
 
     componentDidMount() {

@@ -1,5 +1,14 @@
 const textForApp = {
     en: {
+        links: [
+            'Promo page',
+            'All rights reserved',
+            'Profile',
+            'Main',
+            'Tasks',
+            'Dictionary',
+            'Rules',
+        ],
         inscription: {
             back: 'Back to menu',
             reset: 'Reset statistics',
@@ -35,6 +44,15 @@ const textForApp = {
         },
     },
     ru: {
+        links: [
+            'Промо',
+            'Все права защищены',
+            'Профиль',
+            'Главная',
+            'Упражнения',
+            'Словарь',
+            'Правила',
+        ],
         inscription: {
             back: 'Вернуться в меню',
             reset: 'Сбросить прогресс',

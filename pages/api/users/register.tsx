@@ -1,13 +1,12 @@
-/* eslint-disable no-magic-numbers */
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import nookies from 'nookies';
 import { uuid } from 'uuidv4';
 
 import { RESPONSE_STATUSES } from '../../../constants/constants';
+import Settings from '../../../models/Settings';
 import User from '../../../models/User';
 import documentStore from '../../../utils/documentStore';
-import Settings from '../../../models/Settings';
 
 const register = async (req, res) => {
     const { login, password } = req.body;

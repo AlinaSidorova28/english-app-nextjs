@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import * as React from 'react';
 
 import style from './SimpleSpinner.module.scss';
