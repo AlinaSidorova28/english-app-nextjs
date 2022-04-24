@@ -20,7 +20,8 @@ a {
 }
 
 .dictionary,
-.rules {
+.rules,
+.tasks {
   background: #f8f2ee;
   min-height: calc(100vh - 115px);
 
@@ -54,20 +55,24 @@ a {
   }
 
   .a2-words,
+  .a2-tasks,
   .a2-rules {
     color: #fff;
     background: #32bea6;
   }
   .b1-words,
+  .b1-tasks,
   .b1-rules {
     background: #ffd07d;
   }
   .b2-words,
+  .b2-tasks,
   .b2-rules {
     color: #fff;
     background: #8ba0ae;
   }
   .it-words,
+  .it-tasks,
   .it-rules {
     color: #fff;
     background: #25b6d2;
@@ -101,6 +106,7 @@ a {
 
   .ant-menu-sub.ant-menu-inline {
     background: #ffffff;
+    font-size: 16px;
   }
 
   .ant-menu-sub.ant-menu-inline > .ant-menu-item.rules-item {

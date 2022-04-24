@@ -1,19 +1,19 @@
 import React, { PureComponent } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import Rule from '../components/Rule/Rule';
-import { LEVELS } from '../constants/constants';
-import { LanguageType } from '../types/general';
+import TaskBlock from '../../components/TaskBlock/TaskBlock';
+import { LEVELS } from '../../constants/constants';
+import { LanguageType } from '../../types/general';
 
-interface IRulesProps {
+interface ITasksProps {
     lang: LanguageType;
 }
 
-interface IRulesState {
+interface ITasksState {
     isLoading: boolean;
 }
 
-export default class Dictionary extends PureComponent<IRulesProps, IRulesState> {
+export default class Tasks extends PureComponent<ITasksProps, ITasksState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,25 +31,25 @@ export default class Dictionary extends PureComponent<IRulesProps, IRulesState> 
 
         if (isLoading) {
             return (
-                <div className={'rules'}>
+                <div className={'tasks'}>
                     <div className={'container'} />
                 </div>
             );
         }
 
         return (
-            <div className={'rules'}>
+            <div className={'tasks'}>
                 <div className={'container'}>
                     <Tabs>
                         <TabList className={'tab-list'}>
-                            <Tab className={'tab a2-rules'}>Pre Intermediate</Tab>
-                            <Tab className={'tab b1-rules'}>Intermediate</Tab>
-                            <Tab className={'tab b2-rules'}>Upper Intermedite</Tab>
-                            <Tab className={'tab it-rules'}>IT Sphere</Tab>
+                            <Tab className={'tab a2-tasks'}>Pre Intermediate</Tab>
+                            <Tab className={'tab b1-tasks'}>Intermediate</Tab>
+                            <Tab className={'tab b2-tasks'}>Upper Intermedite</Tab>
+                            <Tab className={'tab it-tasks'}>IT Sphere</Tab>
                         </TabList>
                         {LEVELS.map((el) => (
                             <TabPanel className={'tab-panel'} key={el}>
-                                <Rule filter={el} lang={lang}/>
+                                <TaskBlock filter={el} lang={lang}/>
                             </TabPanel>
                         ))}
                     </Tabs>
