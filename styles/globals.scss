@@ -126,6 +126,24 @@ a {
     }
   }
 
+  .ant-checkbox-wrapper {
+    font-size: 16px;
+  }
+
+  .ant-checkbox-wrapper.wrong {
+    .ant-checkbox-inner {
+      background-color: red;
+      border-color: red;
+    }
+  }
+
+  .ant-checkbox-wrapper-checked.right {
+    .ant-checkbox-inner {
+      background-color: green;
+      border-color: green;
+    }
+  }
+
   .hidden {
     display: none;
   }
