@@ -78,7 +78,7 @@ export interface IChooseTask extends IBaseTask {
         question: string;
         answers: string[];
     }>;
-    answer: Array<number|number[] >;
+    answer: number[];
 }
 
 export interface IWriteTask extends IBaseTask {

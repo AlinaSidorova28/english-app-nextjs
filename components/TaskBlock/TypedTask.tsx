@@ -1,4 +1,4 @@
-import { Checkbox, Image, Row } from 'antd';
+import { Checkbox, Image, Radio, Row } from 'antd';
 import parse from 'html-react-parser';
 import React from 'react';
 
@@ -27,7 +27,23 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
     }
 
     onChange(checkedValues) {
-        this.setState({ answers: checkedValues, diff: null });
+        const { task } = this.props;
+        const answers = [...this.state.answers];
+
+        switch (task.type) {
+        case taskTypes.CHECK:
+            this.setState({ answers: checkedValues, diff: null });
+            break;
+        case taskTypes.CHOOSE:
+            answers[checkedValues.target.name.split('-')[1]] = checkedValues.target.value;
+            this.setState({ answers, diff: null });
+            break;
+        case taskTypes.MATCH:
+        case taskTypes.WRITE:
+        case taskTypes.WRITE_EXAMPLE:
+        default:
+            break;
+        }
     }
 
     checkAnswer() {
@@ -44,6 +60,12 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
             });
             break;
         case taskTypes.CHOOSE:
+            task.answer.map((answer, i) => {
+                if (answer !== answers[i]) {
+                    diff[i] = answer;
+                }
+            });
+            break;
         case taskTypes.MATCH:
         case taskTypes.WRITE:
         case taskTypes.WRITE_EXAMPLE:
@@ -85,17 +107,46 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                             </button>
                         </div>
                         {task.image && <div className={style.image_block}>
-                            <Image src={task.image}/>
+                            <Image src={`/${task.image}`}/>
                         </div>}
                     </div>
                 </div>
             );
-        // todo: DEV-26
         case taskTypes.CHOOSE:
             return (
                 <div className={style.task}>
-                    <h2>{`Task ${task.number}`}</h2>
-                    {task.type}
+                    <h2 className={style.task_header}>{`Task ${task.number}. ${parse(task.task)}`}</h2>
+                    <div className={style.task_content}>
+                        <div className={style.task_block}>
+                            {task.audio && <audio src={require(`public/audio/${task.audio}`).default} controls/>}
+                            <div>
+                                {task.content.map((el, i) => {
+                                    return <div key={el.question}>
+                                        <div>{`${i + 1}. ${parse(el.question)}`}</div>
+                                        <Radio.Group name={`${task.number}-${i}`} onChange={this.onChange.bind(this)}>
+                                            {el.answers.map((answer, index) => {
+                                                return <Radio key={`${i}-${index}-${answer}`}
+                                                              value={index + 1}
+                                                              className={diff?.[i] === index + 1
+                                                                  ? 'wrong'
+                                                                  : diff?.length === 0 ? 'right' : ''}>
+                                                    {answer}
+                                                </Radio>;
+                                            })}
+                                        </Radio.Group>
+                                    </div>;
+                                })}
+                            </div>
+                            <button className={style.button_check}
+                                    onClick={this.checkAnswer.bind(this)}
+                                    type="submit">
+                                {isLoading ? <SimpleSpinner/> : 'Check'}
+                            </button>
+                        </div>
+                        {task.image && <div className={style.image_block}>
+                            <Image src={`/${task.image}`}/>
+                        </div>}
+                    </div>
                 </div>
             );
         // todo: DEV-9
