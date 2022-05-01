@@ -1,5 +1,15 @@
 $media-width: 699px;
 
+.wrong-color {
+  background-color: red;
+  border-color: red;
+}
+
+.right-color {
+  background-color: green;
+  border-color: green;
+}
+
 html,
 body {
   margin: 0;
@@ -132,15 +142,25 @@ a {
 
   .ant-checkbox-wrapper.wrong {
     .ant-checkbox-inner {
-      background-color: red;
-      border-color: red;
+      @extend .wrong-color;
     }
   }
 
   .ant-checkbox-wrapper-checked.right {
     .ant-checkbox-inner {
-      background-color: green;
-      border-color: green;
+      @extend .right-color;
+    }
+  }
+
+  .ant-radio-wrapper.wrong {
+    .ant-radio-inner {
+      @extend .wrong-color;
+    }
+  }
+
+  .ant-radio-wrapper-checked.right {
+    .ant-radio-inner::after {
+      @extend .right-color;
     }
   }
 
