@@ -37,6 +37,41 @@
           cursor: pointer;
         }
       }
+
+      .list_block {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4em;
+
+        ol li {
+          list-style-position: inside;
+        }
+      }
+
+      .input_block {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        input {
+          width: 25px;
+          height: 25px;
+          padding: 0 5px;
+          outline: none;
+          border: 1px solid #c6c3bd;
+          text-transform: capitalize;
+
+          &.wrong {
+            background-color: red;
+            color: #ffffff;
+          }
+
+          &.right {
+            background-color: green;
+            color: #ffffff;
+          }
+        }
+      }
     }
 
     .image_block {

@@ -2,6 +2,7 @@ import { Checkbox, Image, Radio, Row } from 'antd';
 import parse from 'html-react-parser';
 import React from 'react';
 
+import { ALPHABET } from '../../constants/constants';
 import { GeneralTask, taskTypes } from '../../types/general';
 import { SimpleSpinner } from '../SimpleSpinner/SimpleSpinner';
 import style from './TaskBlock.module.scss';
@@ -26,19 +27,22 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
         };
     }
 
-    onChange(checkedValues) {
+    onChange(value, index = 0) {
         const { task } = this.props;
         const answers = [...this.state.answers];
 
         switch (task.type) {
         case taskTypes.CHECK:
-            this.setState({ answers: checkedValues, diff: null });
+            this.setState({ answers: value, diff: null });
             break;
         case taskTypes.CHOOSE:
-            answers[checkedValues.target.name.split('-')[1]] = checkedValues.target.value;
+            answers[value.target.name.split('-')[1]] = value.target.value;
             this.setState({ answers, diff: null });
             break;
         case taskTypes.MATCH:
+            answers[index] = ALPHABET.indexOf(value.target.value?.toLowerCase()) + 1;
+            this.setState({ answers, diff: null });
+            break;
         case taskTypes.WRITE:
         case taskTypes.WRITE_EXAMPLE:
         default:
@@ -67,6 +71,13 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
             });
             break;
         case taskTypes.MATCH:
+            task.answer.map((answer) => {
+                const i = answer[0] - 1;
+                if (answers[i] !== answer[1]) {
+                    diff[i] = answer[1];
+                }
+            });
+            break;
         case taskTypes.WRITE:
         case taskTypes.WRITE_EXAMPLE:
         default:
@@ -149,12 +160,49 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                     </div>
                 </div>
             );
-        // todo: DEV-9
         case taskTypes.MATCH:
             return (
                 <div className={style.task}>
-                    <h2>{`Task ${task.number}`}</h2>
-                    {task.type}
+                    <h2 className={style.task_header}>{`Task ${task.number}. ${parse(task.task)}`}</h2>
+                    <div className={style.task_content}>
+                        <div className={style.task_block}>
+                            {task.audio && <audio src={require(`public/audio/${task.audio}`).default} controls/>}
+                            <div>
+                                <div className={style.list_block}>
+                                    <ol type={'1'}>
+                                        {task.content.left.map((el, index) => {
+                                            return <li key={`${index}-${el}`}>{parse(el)}</li>;
+                                        })}
+                                    </ol>
+                                    <ol type={'A'}>
+                                        {task.content.right.map((el, index) => {
+                                            return <li key={`${index}-${el}`}>{parse(el)}</li>;
+                                        })}
+                                    </ol>
+                                </div>
+                                <div className={style.input_block}>
+                                    {task.content.left.map((el, index) => {
+                                        return <span key={`answer-${task.number}-${index}`}>
+                                            {`${ index +1 } – `}
+                                            <input maxLength={1}
+                                                   className={diff?.[index]
+                                                       ? style.wrong
+                                                       : diff?.length === 0 ? style.right : ''}
+                                                   onChange={(e) => this.onChange.call(this, e, index)}/>
+                                        </span>;
+                                    })}
+                                </div>
+                            </div>
+                            <button className={style.button_check}
+                                    onClick={this.checkAnswer.bind(this)}
+                                    type="submit">
+                                {isLoading ? <SimpleSpinner/> : 'Check'}
+                            </button>
+                        </div>
+                        {task.image && <div className={style.image_block}>
+                            <Image src={`/${task.image}`}/>
+                        </div>}
+                    </div>
                 </div>
             );
         // todo: DEV-24
