@@ -15,6 +15,7 @@
       display: grid;
       grid-gap: 1em;
       font-size: 16px;
+      max-width: 550px;
 
       .button_check {
         font-family: Rubik;
@@ -43,8 +44,29 @@
         flex-wrap: wrap;
         gap: 4em;
 
-        ol li {
-          list-style-position: inside;
+        ol {
+          max-width: 70%;
+
+          li {
+            list-style-position: inside;
+          }
+        }
+      }
+
+      input {
+        height: 25px;
+        padding: 0 5px;
+        outline: none;
+        border: 1px solid #c6c3bd;
+
+        &.wrong {
+          background-color: red;
+          color: #ffffff;
+        }
+
+        &.right {
+          background-color: green;
+          color: #ffffff;
         }
       }
 
@@ -55,21 +77,7 @@
 
         input {
           width: 25px;
-          height: 25px;
-          padding: 0 5px;
-          outline: none;
-          border: 1px solid #c6c3bd;
           text-transform: capitalize;
-
-          &.wrong {
-            background-color: red;
-            color: #ffffff;
-          }
-
-          &.right {
-            background-color: green;
-            color: #ffffff;
-          }
         }
       }
     }

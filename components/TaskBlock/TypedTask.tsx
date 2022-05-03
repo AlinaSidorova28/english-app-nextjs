@@ -12,7 +12,7 @@ interface ITypedTaskProps {
 }
 
 interface ITypedTaskState {
-    answers: number[];
+    answers: (number | string)[];
     isLoading: boolean;
     diff: any;
 }
@@ -44,6 +44,11 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
             this.setState({ answers, diff: null });
             break;
         case taskTypes.WRITE:
+            const length = value.target.value?.length || 0;
+            value.target.size = length - 4 <= 6 ? 6 : length - 4;
+            answers[index] = value.target.value;
+            this.setState({ answers, diff: null });
+            break;
         case taskTypes.WRITE_EXAMPLE:
         default:
             break;
@@ -57,13 +62,14 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
 
         switch (task.type) {
         case taskTypes.CHECK:
-            [...answers, ...task.answer].filter((answer) => {
+            [...answers, ...task.answer].filter((answer: any) => {
                 if (!(answers.includes(answer) && task.answer.includes(answer))) {
                     diff.push(answer);
                 }
             });
             break;
         case taskTypes.CHOOSE:
+        case taskTypes.WRITE:
             task.answer.map((answer, i) => {
                 if (answer !== answers[i]) {
                     diff[i] = answer;
@@ -78,7 +84,6 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                 }
             });
             break;
-        case taskTypes.WRITE:
         case taskTypes.WRITE_EXAMPLE:
         default:
             break;
@@ -95,7 +100,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
         case taskTypes.CHECK:
             return (
                 <div className={style.task}>
-                    <h2 className={style.task_header}>{`Task ${task.number}. ${parse(task.task)}`}</h2>
+                    <h2 className={style.task_header}>{`Task ${task.number}. ${task.task}`}</h2>
                     <div className={style.task_content}>
                         <div className={style.task_block}>
                             {task.audio && <audio src={require(`public/audio/${task.audio}`).default} controls/>}
@@ -126,7 +131,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
         case taskTypes.CHOOSE:
             return (
                 <div className={style.task}>
-                    <h2 className={style.task_header}>{`Task ${task.number}. ${parse(task.task)}`}</h2>
+                    <h2 className={style.task_header}>{`Task ${task.number}. ${task.task}`}</h2>
                     <div className={style.task_content}>
                         <div className={style.task_block}>
                             {task.audio && <audio src={require(`public/audio/${task.audio}`).default} controls/>}
@@ -163,7 +168,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
         case taskTypes.MATCH:
             return (
                 <div className={style.task}>
-                    <h2 className={style.task_header}>{`Task ${task.number}. ${parse(task.task)}`}</h2>
+                    <h2 className={style.task_header}>{`Task ${task.number}. ${task.task}`}</h2>
                     <div className={style.task_content}>
                         <div className={style.task_block}>
                             {task.audio && <audio src={require(`public/audio/${task.audio}`).default} controls/>}
@@ -205,12 +210,46 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                     </div>
                 </div>
             );
-        // todo: DEV-24
         case taskTypes.WRITE:
+            let inputIndex = 0;
+
             return (
                 <div className={style.task}>
-                    <h2>{`Task ${task.number}`}</h2>
-                    {task.type}
+                    <h2 className={style.task_header}>{`Task ${task.number}. ${task.task}`}</h2>
+                    <div className={style.task_content}>
+                        <div className={style.task_block}>
+                            {task.audio && <audio src={require(`public/audio/${task.audio}`).default} controls/>}
+                            <div>
+                                {task.content.map((el, i) => {
+                                    const splited = el.split('...');
+
+                                    return <span key={`${task.number}-${i}`}>
+                                        {parse(splited[0])}
+                                        {splited[1]
+                                            ? <>
+                                                <input maxLength={30}
+                                                       name={(inputIndex++).toString()}
+                                                       className={diff?.[inputIndex - 1]
+                                                           ? style.wrong
+                                                           : diff?.length === 0 ? style.right : ''}
+                                                       onChange={(e) => this.onChange.call(this, e, +e.target.name)}
+                                                       size={6}/>
+                                                {parse(splited[1])}
+                                            </>
+                                            : null}
+                                    </span>;
+                                })}
+                            </div>
+                            <button className={style.button_check}
+                                    onClick={this.checkAnswer.bind(this)}
+                                    type="submit">
+                                {isLoading ? <SimpleSpinner/> : 'Check'}
+                            </button>
+                        </div>
+                        {task.image && <div className={style.image_block}>
+                            <Image src={`/${task.image}`}/>
+                        </div>}
+                    </div>
                 </div>
             );
         // todo: DEV-23
