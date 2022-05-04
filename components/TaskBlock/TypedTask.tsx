@@ -9,6 +9,7 @@ import style from './TaskBlock.module.scss';
 
 interface ITypedTaskProps {
     task: GeneralTask;
+    moveNext: () => void;
 }
 
 interface ITypedTaskState {
@@ -67,7 +68,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
 
     checkAnswer() {
         const { answers } = this.state;
-        const { task } = this.props;
+        const { task, moveNext } = this.props;
         const diff: any = [];
 
         switch (task.type) {
@@ -115,6 +116,10 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
             break;
         default:
             break;
+        }
+
+        if (!diff.length) {
+            moveNext();
         }
 
         this.setState({ diff });

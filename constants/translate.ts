@@ -8,6 +8,7 @@ const textForApp = {
             'Tasks',
             'Dictionary',
             'Rules',
+            'Back to the task list',
         ],
         inscription: {
             back: 'Back to menu',
@@ -52,6 +53,7 @@ const textForApp = {
             'Упражнения',
             'Словарь',
             'Правила',
+            'Назад к списку заданий',
         ],
         inscription: {
             back: 'Вернуться в меню',

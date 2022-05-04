@@ -2,6 +2,7 @@ import { Menu } from 'antd';
 import { SubMenu } from 'rc-menu';
 import React from 'react';
 
+import { BOOKS } from '../../constants/constants';
 import textForApp from '../../constants/translate';
 import { LanguageType } from '../../types/general';
 import { getUnitsByModuleId } from '../../utils/TasksControllers';
@@ -59,9 +60,6 @@ export default class TaskBlock extends React.PureComponent<ITaskBlockProps, ITas
             return <h3>{textForApp[lang].message[3]}</h3>;
         }
 
-        // todo кнопка назад
-        // todo появление заданий по очереди для теста
-
         return (
             <div className={style['task-block']}>
                 <Menu mode="inline" openKeys={openKeys} onOpenChange={this.onOpenChange.bind(this)} style={{ width: '100%' }}>
@@ -70,20 +68,20 @@ export default class TaskBlock extends React.PureComponent<ITaskBlockProps, ITas
                             <Menu.Item className={'task-item'}
                                        key={`sb-${index + 1}`}>
                                 <NavLink href={`/tasks/${unit.sb}`}>
-                                    <a>Student’s book</a>
+                                    <a>{BOOKS.sb}</a>
                                 </NavLink>
                             </Menu.Item>
                             <Menu.Item className={'task-item'}
                                        key={`wb-${index + 1}`}>
                                 <NavLink href={`/tasks/${unit.wb}`}>
-                                    <a>Workbook</a>
+                                    <a>{BOOKS.wb}</a>
                                 </NavLink>
                             </Menu.Item>
                             {index % 2
                                 ? <Menu.Item className={'task-item'}
                                              key={`tb-${index + 1}`}>
                                     <NavLink href={`/tasks/${unit.tb}`}>
-                                        <a>{`Test ${index}-${index + 1}`}</a>
+                                        <a>{`${BOOKS.tb} ${index}-${index + 1}`}</a>
                                     </NavLink>
                                 </Menu.Item>
                                 : null}
