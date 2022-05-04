@@ -9,6 +9,7 @@
   .task_content {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     flex-wrap: wrap-reverse;
 
     .task_block {
@@ -58,6 +59,21 @@
         padding: 0 5px;
         outline: none;
         border: 1px solid #c6c3bd;
+
+        &.wrong {
+          background-color: red;
+          color: #ffffff;
+        }
+
+        &.right {
+          background-color: green;
+          color: #ffffff;
+        }
+      }
+
+      textarea {
+        padding: 0 5px;
+        resize: none;
 
         &.wrong {
           background-color: red;

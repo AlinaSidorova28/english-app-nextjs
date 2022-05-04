@@ -79,7 +79,7 @@ class Header extends React.PureComponent<IHeaderProps, IHeaderState> {
                     </li>
                     {userName && <>
                         <li>
-                            <NavLink href="/tasks" activeClassName={style.active}>
+                            <NavLink href="/tasks" activeClassName={style.active} exact={false}>
                                 <a>{textForApp[lang].links[4]}</a>
                             </NavLink>
                         </li>
