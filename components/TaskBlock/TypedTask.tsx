@@ -12,7 +12,7 @@ interface ITypedTaskProps {
 }
 
 interface ITypedTaskState {
-    answers: (number | string)[];
+    answers: (number | string | string[])[];
     isLoading: boolean;
     diff: any;
 }
@@ -27,9 +27,10 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
         };
     }
 
-    onChange(value, index = 0) {
+    onChange(value, extIndex = 0, intIndex = 0) {
         const { task } = this.props;
         const answers = [...this.state.answers];
+        const length = value?.target?.value?.length || 0;
 
         switch (task.type) {
         case taskTypes.CHECK:
@@ -40,16 +41,25 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
             this.setState({ answers, diff: null });
             break;
         case taskTypes.MATCH:
-            answers[index] = ALPHABET.indexOf(value.target.value?.toLowerCase()) + 1;
+            answers[extIndex] = ALPHABET.indexOf(value.target.value?.toLowerCase()) + 1;
             this.setState({ answers, diff: null });
             break;
         case taskTypes.WRITE:
-            const length = value.target.value?.length || 0;
             value.target.size = length - 4 <= 6 ? 6 : length - 4;
-            answers[index] = value.target.value;
+            answers[extIndex] = value.target.value;
             this.setState({ answers, diff: null });
             break;
         case taskTypes.WRITE_EXAMPLE:
+            // todo что делать с шириной для мобилок ??? (max-width: 243px; можно еще с height придумать)
+            value.target.rows = length >= 75 ? 3 : length >= 40 ? 2 : 1;
+
+            if (!answers[extIndex]) {
+                answers[extIndex] = [];
+            }
+
+            answers[extIndex][intIndex] = value.target.value;
+            this.setState({ answers, diff: null });
+            break;
         default:
             break;
         }
@@ -69,7 +79,6 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
             });
             break;
         case taskTypes.CHOOSE:
-        case taskTypes.WRITE:
             task.answer.map((answer, i) => {
                 if (answer !== answers[i]) {
                     diff[i] = answer;
@@ -84,7 +93,26 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                 }
             });
             break;
+        case taskTypes.WRITE:
+            task.answer.map((answer, i) => {
+                if (!answer.split('/').includes(answers[i] as string)) {
+                    diff[i] = answer;
+                }
+            });
+            break;
         case taskTypes.WRITE_EXAMPLE:
+            task.answer.map((answerArray, i) => {
+                answerArray.map((answer, index) => {
+                    if (!answer.split('/').includes(answers[i]?.[index] as string)) {
+                        if (!diff[i]) {
+                            diff[i] = [];
+                        }
+
+                        diff[i][index] = answer;
+                    }
+                });
+            });
+            break;
         default:
             break;
         }
@@ -252,12 +280,57 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                     </div>
                 </div>
             );
-        // todo: DEV-23
         case taskTypes.WRITE_EXAMPLE:
             return (
                 <div className={style.task}>
-                    <h2>{`Task ${task.number}`}</h2>
-                    {task.type}
+                    <h2 className={style.task_header}>{`Task ${task.number}. ${task.task}`}</h2>
+                    <div className={style.task_content}>
+                        <div className={style.task_block}>
+                            {task.audio && <audio src={require(`public/audio/${task.audio}`).default} controls/>}
+                            <div>
+                                {task.content.map((el, i) => {
+                                    if (!i) {
+                                        return <div key={`${task.number}-${i}`}>
+                                            <span><b>Example: </b><i>{el}</i></span>
+                                            <br/>
+                                            <span>
+                                                <b>Answer: </b>
+                                                {task.example.map((example) => {
+                                                    return parse(example);
+                                                })}
+                                            </span>
+                                        </div>;
+                                    }
+
+                                    return <div key={`${task.number}-${i}`}>
+                                        <div>{el}</div>
+                                        <div>
+                                            {new Array(task.example.length).fill('').map((input, index) => {
+                                                return <textarea maxLength={100}
+                                                                 key={`input-${task.number}-${i}-${index}`}
+                                                                 className={diff?.[i - 1]?.[index]
+                                                                     ? style.wrong
+                                                                     : diff?.length === 0 ? style.right : ''}
+                                                                 onChange={(e) =>
+                                                                     this.onChange.call(this, e, i - 1, index)}
+                                                                 rows={1}
+                                                                 cols={60}/>;
+                                            })}
+                                        </div>
+                                    </div>;
+
+                                })}
+                            </div>
+                            <button className={style.button_check}
+                                    onClick={this.checkAnswer.bind(this)}
+                                    type="submit">
+                                {isLoading ? <SimpleSpinner/> : 'Check'}
+                            </button>
+                        </div>
+                        {task.image && <div className={style.image_block}>
+                            <Image src={`/${task.image}`}/>
+                        </div>}
+                    </div>
                 </div>
             );
         default:

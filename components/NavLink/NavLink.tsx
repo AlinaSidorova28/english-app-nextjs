@@ -4,15 +4,19 @@ import React from 'react';
 
 export interface NavLinkProps extends LinkProps {
     children: React.ReactElement;
-    activeClassName: string;
+    activeClassName?: string;
+    exact?: boolean;
 }
 
-function NavLink({ children, activeClassName, href, ...props }: NavLinkProps) {
+function NavLink({ children, activeClassName, href, exact = true, ...props }: NavLinkProps) {
     const router = useRouter();
+    const isActive = exact
+        ? router?.pathname === href
+        : router?.pathname?.startsWith(href as string);
 
     return (
         <Link href={href} {...props}>
-            {router?.pathname === href ? React.cloneElement(children, { className: activeClassName }) : children}
+            {isActive ? React.cloneElement(children, { className: activeClassName }) : children}
         </Link>
     );
 }
