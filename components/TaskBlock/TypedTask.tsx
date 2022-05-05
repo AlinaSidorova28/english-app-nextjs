@@ -296,7 +296,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                 {task.content.map((el, i) => {
                                     if (!i) {
                                         return <div key={`${task.number}-${i}`}>
-                                            <span><b>Example: </b><i>{el}</i></span>
+                                            <span><b>Example: </b><i>{parse(el)}</i></span>
                                             <br/>
                                             <span>
                                                 <b>Answer: </b>
@@ -308,7 +308,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                     }
 
                                     return <div key={`${task.number}-${i}`}>
-                                        <div>{el}</div>
+                                        <div>{parse(el)}</div>
                                         <div>
                                             {new Array(task.example.length).fill('').map((input, index) => {
                                                 return <textarea maxLength={100}

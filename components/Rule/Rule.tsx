@@ -1,4 +1,4 @@
-import { Menu } from 'antd';
+import { Image, Menu } from 'antd';
 import { SubMenu } from 'rc-menu';
 import React from 'react';
 
@@ -70,7 +70,7 @@ export default class Rule extends React.PureComponent<IRuleProps, IRuleState> {
                                     return (<div key={`${rule.id}-${name}`}>
                                         <h2>{name}</h2>
                                         <div className={style['image-wrapper']}>
-                                            {content.map((img) => <img src={`/${img}`} key={img}/>)}
+                                            {content.map((img) => <Image src={`/${img}`} key={img}/>)}
                                         </div>
                                     </div>);
                                 })}

@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import NavLink from '../../components/NavLink/NavLink';
+import Spinner from '../../components/Spinner/Spinner';
 import TypedTask from '../../components/TaskBlock/TypedTask';
 import { BOOKS } from '../../constants/constants';
 import textForApp from '../../constants/translate';
@@ -14,6 +15,7 @@ const Tasks = (props) => {
     const [tasks, setTasks] = useState<Task>({} as Task);
     const [moduleName, setModuleName] = useState('');
     const [solvedTasks, setSolvedTasks] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
     const isTest = tasks?.id?.includes('tb');
 
     const router = useRouter();
@@ -38,6 +40,7 @@ const Tasks = (props) => {
         const tasks = content?.tasks || {};
 
         setTasks(tasks);
+        setIsLoading(false);
     };
 
     return (
@@ -50,13 +53,15 @@ const Tasks = (props) => {
                     <h1>{moduleName}</h1>
                 </div>
                 <div className={style.tasks_wrapper}>
-                    {tasks.task?.map((task: GeneralTask, index) => {
-                        if ((isTest && index <= solvedTasks) || !isTest) {
-                            return <TypedTask key={`${taskId}-${index + 1}`} task={task} moveNext={moveNext}/>;
-                        }
+                    {isLoading
+                        ? <Spinner/>
+                        : tasks.task?.map((task: GeneralTask, index) => {
+                            if ((isTest && index <= solvedTasks) || !isTest) {
+                                return <TypedTask key={`${taskId}-${index + 1}`} task={task} moveNext={moveNext}/>;
+                            }
 
-                        return null;
-                    })}
+                            return null;
+                        })}
                 </div>
             </div>
         </div>
