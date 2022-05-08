@@ -19,29 +19,35 @@ class MyApp extends App {
     static async getInitialProps({ Component, router, ctx }) {
         let pageProps: AppProps = initialSettings;
 
-        if (Component.getInitialProps) {
-            pageProps = await Component.getInitialProps(ctx);
-            if (!nookies.get(ctx).lang) {
-                nookies.set(ctx, 'lang', 'ru', { path: '/' });
-                ctx.req.headers.cookie = 'lang=ru';
-            }
+        if (!nookies.get(ctx).lang) {
+            nookies.set(ctx, 'lang', 'ru', { path: '/' });
+            ctx.req.headers.cookie = 'lang=ru';
+        }
 
-            const { userName } = nookies.get(ctx);
-            const data = verifyToken(ctx);
+        const { userName } = nookies.get(ctx);
+        const data = verifyToken(ctx);
 
-            if (data.authenticated) {
-                const { settings } = await getUserData(data.user);
-                pageProps.lang = settings.lang;
-                pageProps.settings = settings;
-            } else if (userName) {
-                const { settings } = await getUserData(userName);
-                pageProps.lang = settings.lang;
-                pageProps.settings = settings;
-            } else {
-                pageProps.lang = nookies.get(ctx).lang as LanguageType;
-                const { lang } = nookies.get(ctx);
-                pageProps.settings = { lang };
-            }
+        if (data.authenticated) {
+            const { settings } = await getUserData(data.user);
+            pageProps = {
+                ...pageProps,
+                lang: settings.lang,
+                settings,
+            };
+        } else if (userName) {
+            const { settings } = await getUserData(userName);
+            pageProps = {
+                ...pageProps,
+                lang: settings.lang,
+                settings,
+            };
+        } else {
+            const { lang } = nookies.get(ctx);
+            pageProps = {
+                ...pageProps,
+                lang: nookies.get(ctx).lang as LanguageType,
+                settings: { lang },
+            };
         }
 
         return { pageProps };

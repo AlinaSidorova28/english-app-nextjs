@@ -24,6 +24,12 @@ export enum Levels {
     IT = 'IT',
 }
 
+export type Progress = {
+    answer: (number | string | string[])[];
+    attempts: number;
+    done: boolean;
+}
+
 export type Rules = {
     [key in Levels]: Array<Array<IRule>>;
 }

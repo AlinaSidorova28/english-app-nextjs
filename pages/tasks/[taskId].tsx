@@ -9,17 +9,21 @@ import textForApp from '../../constants/translate';
 import Task from '../../models/Task';
 import style from '../../styles/Tasks.module.scss';
 import { GeneralTask } from '../../types/general';
+import { updateSettings } from '../../utils/settingsControllers';
 import { getTaskById } from '../../utils/TasksControllers';
 
 const Tasks = (props) => {
     const [tasks, setTasks] = useState<Task>({} as Task);
     const [moduleName, setModuleName] = useState('');
-    const [solvedTasks, setSolvedTasks] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
+    const [progress, setProgress] = useState(props.settings?.progress);
     const isTest = tasks?.id?.includes('tb');
 
     const router = useRouter();
     const { taskId } = router.query;
+    const currentTask = progress?.[taskId as string] ?? {};
+    const [solvedTasks, setSolvedTasks] = useState(Object.keys(currentTask)
+        ?.filter((key) => currentTask[key]?.done)?.length ?? 0);
 
     useEffect(() => {
         getTasks();
@@ -43,6 +47,11 @@ const Tasks = (props) => {
         setIsLoading(false);
     };
 
+    const updateProgress = (settings) => {
+        updateSettings(settings);
+        setProgress({ ...progress, ...settings?.progress });
+    };
+
     return (
         <div className={'tasks'}>
             <div className={'container'}>
@@ -57,7 +66,12 @@ const Tasks = (props) => {
                         ? <Spinner/>
                         : tasks.task?.map((task: GeneralTask, index) => {
                             if ((isTest && index <= solvedTasks) || !isTest) {
-                                return <TypedTask key={`${taskId}-${index + 1}`} task={task} moveNext={moveNext}/>;
+                                return <TypedTask key={`${taskId}-${index + 1}`}
+                                                  task={task}
+                                                  taskId={taskId as string}
+                                                  moveNext={moveNext}
+                                                  progress={progress}
+                                                  updateProgress={updateProgress}/>;
                             }
 
                             return null;
