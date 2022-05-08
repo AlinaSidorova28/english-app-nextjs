@@ -9,7 +9,10 @@ import style from './TaskBlock.module.scss';
 
 interface ITypedTaskProps {
     task: GeneralTask;
+    taskId: string;
     moveNext: () => void;
+    progress: Record<string, any>;
+    updateProgress: (settings) => void;
 }
 
 interface ITypedTaskState {
@@ -28,37 +31,80 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
         };
     }
 
-    onChange(value, extIndex = 0, intIndex = 0) {
+    componentDidMount() {
+        this.setInitialData();
+    }
+
+    setInitialData() {
+        const { progress, taskId, task } = this.props;
+        const tasks = progress?.[taskId] ?? {};
+        const currentTask = tasks[task.number] ?? {};
+
+        if (currentTask?.done) {
+            this.setState({ answers: currentTask?.answer, diff: [] });
+        }
+    }
+
+    formatProgress(done: boolean) {
+        const { answers } = this.state;
+        const { progress, task, taskId, updateProgress } = this.props;
+        const tasks = progress[taskId] ?? {};
+        const currentTask = tasks[task.number] ?? {};
+        const settings = {
+            progress: {
+                [taskId]: {
+                    ...tasks,
+                    [task.number]: {
+                        ...currentTask,
+                        answer: answers,
+                        attempts: currentTask.attempts
+                            ? currentTask.done && done ? currentTask.attempts : currentTask.attempts + 1
+                            : 1,
+                        done,
+                    },
+                },
+            },
+        };
+        updateProgress(settings);
+    }
+
+    onChange(event, extIndex = 0, intIndex = 0) {
         const { task } = this.props;
         const answers = [...this.state.answers];
-        const length = value?.target?.value?.length || 0;
+        const length = event?.target?.value?.length || 0;
 
         switch (task.type) {
         case taskTypes.CHECK:
-            this.setState({ answers: value, diff: null });
+            if (answers[extIndex]) {
+                delete answers[extIndex];
+            } else {
+                answers[extIndex] = event.target.value;
+            }
+
+            this.setState({ answers, diff: null });
             break;
         case taskTypes.CHOOSE:
-            answers[value.target.name.split('-')[1]] = value.target.value;
+            answers[extIndex] = event.target.value;
             this.setState({ answers, diff: null });
             break;
         case taskTypes.MATCH:
-            answers[extIndex] = ALPHABET.indexOf(value.target.value?.toLowerCase()) + 1;
+            answers[extIndex] = ALPHABET.indexOf(event.target.value?.toLowerCase()) + 1;
             this.setState({ answers, diff: null });
             break;
         case taskTypes.WRITE:
-            value.target.size = length - 4 <= 6 ? 6 : length - 4;
-            answers[extIndex] = value.target.value;
+            event.target.size = length - 4 <= 6 ? 6 : length - 4;
+            answers[extIndex] = event.target.value;
             this.setState({ answers, diff: null });
             break;
         case taskTypes.WRITE_EXAMPLE:
             // todo что делать с шириной для мобилок ??? (max-width: 243px; можно еще с height придумать)
-            value.target.rows = length >= 75 ? 3 : length >= 40 ? 2 : 1;
+            event.target.rows = length >= 75 ? 3 : length >= 40 ? 2 : 1;
 
             if (!answers[extIndex]) {
                 answers[extIndex] = [];
             }
 
-            answers[extIndex][intIndex] = value.target.value;
+            answers[extIndex][intIndex] = event.target.value;
             this.setState({ answers, diff: null });
             break;
         default:
@@ -74,7 +120,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
         switch (task.type) {
         case taskTypes.CHECK:
             [...answers, ...task.answer].filter((answer: any) => {
-                if (!(answers.includes(answer) && task.answer.includes(answer))) {
+                if (answer && !(answers.includes(answer) && task.answer.includes(answer))) {
                     diff.push(answer);
                 }
             });
@@ -122,12 +168,15 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
             moveNext();
         }
 
+        this.formatProgress(!diff.length);
         this.setState({ diff });
     }
 
     render() {
-        const { isLoading, diff } = this.state;
+        const { isLoading, diff, answers } = this.state;
         const { task } = this.props;
+
+        // console.log(task, answers);
 
         switch (task.type) {
         case taskTypes.CHECK:
@@ -137,18 +186,20 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                     <div className={style.task_content}>
                         <div className={style.task_block}>
                             {task.audio && <audio src={require(`public/audio/${task.audio}`).default} controls/>}
-                            <Checkbox.Group style={{ width: '100%' }} onChange={this.onChange.bind(this)}>
+                            <div>
                                 {(task.content).map((el, index) => {
                                     return <Row key={el}>
                                         <Checkbox className={diff?.includes(index + 1)
                                             ? 'wrong'
                                             : diff?.length === 0 ? 'right' : ''}
-                                                  value={index + 1}>
+                                                  value={index + 1}
+                                                  checked={answers?.includes(index + 1)}
+                                                  onChange={(e) => this.onChange.call(this, e, index)}>
                                             {`${index + 1}. ${parse(el)}`}
                                         </Checkbox>
                                     </Row>;
                                 })}
-                            </Checkbox.Group>
+                            </div>
                             <button className={style.button_check}
                                     onClick={this.checkAnswer.bind(this)}
                                     type="submit">
@@ -172,17 +223,17 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                 {task.content.map((el, i) => {
                                     return <div key={el.question}>
                                         <div>{`${i + 1}. ${parse(el.question)}`}</div>
-                                        <Radio.Group name={`${task.number}-${i}`} onChange={this.onChange.bind(this)}>
-                                            {el.answers.map((answer, index) => {
-                                                return <Radio key={`${i}-${index}-${answer}`}
-                                                              value={index + 1}
-                                                              className={diff?.[i] === index + 1
-                                                                  ? 'wrong'
-                                                                  : diff?.length === 0 ? 'right' : ''}>
-                                                    {answer}
-                                                </Radio>;
-                                            })}
-                                        </Radio.Group>
+                                        {el.answers.map((answer, index) => {
+                                            return <Radio key={`${i}-${index}-${answer}`}
+                                                          value={index + 1}
+                                                          checked={answers?.[i] === index + 1}
+                                                          onChange={(e) => this.onChange.call(this, e, i)}
+                                                          className={diff?.[i] === index + 1
+                                                              ? 'wrong'
+                                                              : diff?.length === 0 ? 'right' : ''}>
+                                                {answer}
+                                            </Radio>;
+                                        })}
                                     </div>;
                                 })}
                             </div>
@@ -223,6 +274,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                         return <span key={`answer-${task.number}-${index}`}>
                                             {`${ index +1 } – `}
                                             <input maxLength={1}
+                                                   value={answers?.[index] ? ALPHABET[(answers[index] as number) - 1] : ''}
                                                    className={diff?.[index]
                                                        ? style.wrong
                                                        : diff?.length === 0 ? style.right : ''}
@@ -255,6 +307,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                             <div>
                                 {task.content.map((el, i) => {
                                     const splited = el.split('...');
+                                    const length = (answers as string[])?.[inputIndex]?.length ?? 0;
 
                                     return <span key={`${task.number}-${i}`}>
                                         {parse(splited[0])}
@@ -262,11 +315,13 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                             ? <>
                                                 <input maxLength={30}
                                                        name={(inputIndex++).toString()}
+                                                       value={answers?.[inputIndex - 1] ?? ''}
+                                                       autoComplete={'off'}
                                                        className={diff?.[inputIndex - 1]
                                                            ? style.wrong
                                                            : diff?.length === 0 ? style.right : ''}
                                                        onChange={(e) => this.onChange.call(this, e, +e.target.name)}
-                                                       size={6}/>
+                                                       size={length - 4 <= 6 ? 6 : length - 4}/>
                                                 {parse(splited[1])}
                                             </>
                                             : null}
@@ -311,14 +366,17 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                         <div>{parse(el)}</div>
                                         <div>
                                             {new Array(task.example.length).fill('').map((input, index) => {
+                                                const length = input?.length;
+
                                                 return <textarea maxLength={100}
                                                                  key={`input-${task.number}-${i}-${index}`}
+                                                                 value={answers?.[i -1]?.[index]}
                                                                  className={diff?.[i - 1]?.[index]
                                                                      ? style.wrong
                                                                      : diff?.length === 0 ? style.right : ''}
                                                                  onChange={(e) =>
                                                                      this.onChange.call(this, e, i - 1, index)}
-                                                                 rows={1}
+                                                                 rows={length >= 75 ? 3 : length >= 40 ? 2 : 1}
                                                                  cols={60}/>;
                                             })}
                                         </div>

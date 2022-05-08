@@ -12,7 +12,8 @@ export default function Layout({ children }) {
     const router = useRouter();
 
     useEffect(() => {
-        const { lang, userName } = nookies.get(null);
+        const { userName } = nookies.get(null);
+        const { lang } = children?.props;
         setLang(lang as LanguageType);
         setUserName(userName);
     }, [lang, userName, router]);

@@ -36,6 +36,7 @@ const register = async (req, res) => {
 
             nookies.set({ res }, 'token', token, { httpOnly: true, path: '/', maxAge: 60 * 60 * 24 * 7 });
             nookies.set({ res }, 'userName', user.login, { path: '/', maxAge: 60 * 60 * 24 * 7 });
+            nookies.set({ res }, 'userId', user.id, { path: '/', maxAge: 60 * 60 * 24 * 7 });
 
             res.status(RESPONSE_STATUSES.CODE_200).json({ status: 'success', data: { token } });
         }

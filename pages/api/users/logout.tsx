@@ -5,6 +5,7 @@ import { RESPONSE_STATUSES } from '../../../constants/constants';
 const logout = async (req, res) => {
     try {
         nookies.set({ res }, 'userName', '', { path: '/', maxAge: 0 });
+        nookies.set({ res }, 'userId', '', { path: '/', maxAge: 0 });
         nookies.set({ res }, 'token', '', { path: '/', maxAge: 0 });
         res.status(RESPONSE_STATUSES.CODE_200).json({ status: 'success', logout: true });
     } catch (error) {

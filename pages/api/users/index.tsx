@@ -1,6 +1,6 @@
+import { RESPONSE_STATUSES } from '../../../constants/constants';
 import User from '../../../models/User';
 import documentStore from '../../../utils/documentStore';
-import { RESPONSE_STATUSES } from '../../../constants/constants';
 
 const getUsers = async (req, res) => {
     try {
