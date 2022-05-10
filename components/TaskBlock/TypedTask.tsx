@@ -176,8 +176,6 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
         const { isLoading, diff, answers } = this.state;
         const { task } = this.props;
 
-        // console.log(task, answers);
-
         switch (task.type) {
         case taskTypes.CHECK:
             return (

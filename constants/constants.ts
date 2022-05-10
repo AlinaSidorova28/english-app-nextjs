@@ -4,6 +4,7 @@ import { LanguageType } from '../types/general';
 export const DB_URI = 'https://a.free.asidorova.ravendb.cloud';
 export const DB_NAME = 'english-app';
 
+export const MAX_UNITS = 10;
 export const EMPTY_DATA = '—';
 
 export const ONE_SECOND = 1000;

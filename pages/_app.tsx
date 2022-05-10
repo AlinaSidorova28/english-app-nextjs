@@ -13,11 +13,12 @@ import { getUserData, verifyToken } from '../utils/authControllers';
 
 interface AppProps extends SettingsReducerState {
     settings?: Record<string, any>;
+    statusCode?: number;
 }
 
 class MyApp extends App {
     static async getInitialProps({ Component, router, ctx }) {
-        let pageProps: AppProps = initialSettings;
+        let pageProps: AppProps = { ...initialSettings, statusCode: ctx?.res?.statusCode };
 
         if (!nookies.get(ctx).lang) {
             nookies.set(ctx, 'lang', 'ru', { path: '/' });
