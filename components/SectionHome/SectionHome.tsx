@@ -60,7 +60,7 @@ export const SectionHome: React.FC<ISectionHomeProps> = connect(mapStateToProps,
                 {/*<Button onClick={() => history.push('/welcome')}>Click</Button>*/}
                 {/*<NavLink to={'/welcome'}>Click</NavLink>*/}
             </div>
-            : <PromoPage lang={lang}/>
+            : <PromoPage lang={lang} userName={userName}/>
     );
 
 });
