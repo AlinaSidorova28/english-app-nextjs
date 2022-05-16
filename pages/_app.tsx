@@ -6,6 +6,7 @@ import nookies from 'nookies';
 import * as React from 'react';
 
 import Layout from '../components/Layout/Layout';
+import Spinner from '../components/Spinner/Spinner';
 import { initialSettings } from '../constants/constants';
 import { SettingsReducerState } from '../reducers/settingsReducer';
 import { LanguageType } from '../types/general';
@@ -17,6 +18,13 @@ interface AppProps extends SettingsReducerState {
 }
 
 class MyApp extends App {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: true,
+        };
+    }
+
     static async getInitialProps({ Component, router, ctx }) {
         let pageProps: AppProps = { ...initialSettings, statusCode: ctx?.res?.statusCode };
 
@@ -54,8 +62,17 @@ class MyApp extends App {
         return { pageProps };
     }
 
+    componentDidMount() {
+        this.setState({ isLoading: false });
+    }
+
     render() {
         const { Component, pageProps } = this.props;
+
+        // @ts-ignore
+        if (this.state.isLoading) {
+            return <Spinner/>;
+        }
 
         return (
             <Layout>
