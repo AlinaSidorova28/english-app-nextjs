@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 import textForApp from '../../constants/translate';
@@ -17,12 +16,7 @@ const Footer = ({ lang }) => {
 
     return (
         <div className={style.footer}>
-            <div className={style.info}>
-                <Link href="/promo">
-                    {textForApp[lang].links[0]}
-                </Link>
-            </div>
-            <span>{`Copyright © 2022 ${textForApp[lang].links[1]}`}</span>
+            <span>{`Copyright © 2022 ${textForApp[lang].links[0]}`}</span>
         </div>
     );
 };

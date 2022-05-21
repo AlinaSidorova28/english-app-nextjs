@@ -74,7 +74,7 @@ const Tasks = (props) => {
             <div className={'container'}>
                 <div className={'module-header'}>
                     <NavLink href={'/tasks'}>
-                        <a>	&#8592; {textForApp[props.lang]?.links?.[7]}</a>
+                        <a>	&#8592; {textForApp[props.lang]?.links?.[6]}</a>
                     </NavLink>
                     <h1>{moduleName}</h1>
                 </div>
