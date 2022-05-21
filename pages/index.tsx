@@ -1,15 +1,24 @@
 import type { NextPage } from 'next';
+import React from 'react';
 import { Provider } from 'react-redux';
 
 import { GlobalErrorCatchHandler } from '../components/GlobalErrorCatchHandler/GlobalErrorCatchHandler';
-import { SectionHome } from '../components/SectionHome/SectionHome';
+import PromoPage from '../components/PromoPage/PromoPage';
+import { LanguageType } from '../types/general';
 import { store } from '../utils/store';
 
-const Home: NextPage = ({ ...props }) => {
+interface IPromoProps {
+    lang: LanguageType;
+    userName?: string;
+}
+
+const Home: NextPage<IPromoProps> = ({ ...props }) => {
+    const { lang, userName } = props;
+
     return (
         <Provider store={store}>
             <GlobalErrorCatchHandler>
-                <SectionHome props={props}/>
+                <PromoPage lang={lang} userName={userName}/>
             </GlobalErrorCatchHandler>
         </Provider>
     );

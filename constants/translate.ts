@@ -1,7 +1,6 @@
 const textForApp = {
     en: {
         links: [
-            'Promo page',
             'All rights reserved',
             'Profile',
             'Main',
@@ -46,7 +45,6 @@ const textForApp = {
     },
     ru: {
         links: [
-            'Промо',
             'Все права защищены',
             'Профиль',
             'Главная',

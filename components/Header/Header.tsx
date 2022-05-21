@@ -58,7 +58,7 @@ class Header extends React.PureComponent<IHeaderProps, IHeaderState> {
                     {userName
                         ? <>
                             <Link href="/profile">
-                                <a className={style.profile}>{textForApp[lang].links[2]}</a>
+                                <a className={style.profile}>{textForApp[lang].links[1]}</a>
                             </Link>
                             <span className={style.exit}
                                   role="button"
@@ -74,23 +74,23 @@ class Header extends React.PureComponent<IHeaderProps, IHeaderState> {
                 <ul className={style.navigation}>
                     <li>
                         <NavLink href="/" activeClassName={style.active}>
-                            <a>{textForApp[lang].links[3]}</a>
+                            <a>{textForApp[lang].links[2]}</a>
                         </NavLink>
                     </li>
                     {userName && <>
                         <li>
                             <NavLink href="/tasks" activeClassName={style.active} exact={false}>
-                                <a>{textForApp[lang].links[4]}</a>
+                                <a>{textForApp[lang].links[3]}</a>
                             </NavLink>
                         </li>
                         <li>
                             <NavLink href="/dictionary" activeClassName={style.active}>
-                                <a>{textForApp[lang].links[5]}</a>
+                                <a>{textForApp[lang].links[4]}</a>
                             </NavLink>
                         </li>
                         <li>
                             <NavLink href="/rules" activeClassName={style.active}>
-                                <a>{textForApp[lang].links[6]}</a>
+                                <a>{textForApp[lang].links[5]}</a>
                             </NavLink>
                         </li>
                     </>}
