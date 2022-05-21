@@ -15,6 +15,8 @@ import study from './images/stydied.png';
 import tasks from './images/tasks.png';
 import dictionary from './images/words.png';
 import style from './PromoPage.module.scss';
+import textForApp from '../../constants/translate';
+import parse from 'html-react-parser';
 
 const PromoPage = ({ lang, userName }) => (
     <div className={style['promo-section']}>
@@ -26,11 +28,10 @@ const PromoPage = ({ lang, userName }) => (
                 <div className={style['greeting-section']}>
                     <div className={style['greeting-wrapper']}>
                         <h3>
-                            Click On App — это сервис для эффективного изучения английского
+                            {textForApp[lang].promo.description[0]}
                         </h3>
                         <p>
-                            Здесь вы легко и быстро прокачаете грамматику, запоминание слов,
-                            понимание на слух и другие ключевые навыки владения языком
+                            {textForApp[lang].promo.description[1]}
                         </p>
                     </div>
                 </div>
@@ -44,36 +45,36 @@ const PromoPage = ({ lang, userName }) => (
 
         <section className={style['aims-container']}>
             <div className={style['aims-section']}>
-                <h3 className={style['aims-title']}>Английский для ваших целей</h3>
+                <h3 className={style['aims-title']}>{textForApp[lang].promo.description[2]}</h3>
                 <ul className={style['aims-list']}>
                     <li>
                         <div>
                             <img src={travel} alt="" />
-                            <span>Путешествовать</span>
+                            <span>{textForApp[lang].promo.aims[0]}</span>
                         </div>
                         <div>
                             <img src={job} alt="" />
-                            <span>Работать</span>
+                            <span>{textForApp[lang].promo.aims[1]}</span>
                         </div>
                     </li>
                     <li>
                         <div>
                             <img src={study} alt="" />
-                            <span>Учиться</span>
+                            <span>{textForApp[lang].promo.aims[2]}</span>
                         </div>
                         <div>
                             <img src={book} alt="" />
-                            <span>Смотреть фильмы и читать книги</span>
+                            <span>{textForApp[lang].promo.aims[3]}</span>
                         </div>
                     </li>
                     <li>
                         <div>
                             <img src={idea} alt="" />
-                            <span> Развиваться</span>
+                            <span> {textForApp[lang].promo.aims[4]}</span>
                         </div>
                         <div>
                             <img src={country} alt="" />
-                            <span>Переехать в другую cтрану</span>
+                            <span>{textForApp[lang].promo.aims[5]}</span>
                         </div>
                     </li>
                 </ul>
@@ -82,12 +83,8 @@ const PromoPage = ({ lang, userName }) => (
 
         <section className={style['video-section']}>
             <div className={style['description-container']}>
-                <h3>Весь английский на одном сайте</h3>
-                <p>
-                    Click On App — это интерактивная версия популярного учебника по английскому языку Click On.
-                    Здесь собрана коллекция упражнений для любого уровня владения английским.
-                    Сфокусируйтесь на том, что важно именно вам, и добейтесь результатов.
-                </p>
+                <h3>{textForApp[lang].promo.description[3]}</h3>
+                <p>{textForApp[lang].promo.description[4]}</p>
             </div>
             <div className={style['video-container']}>
                 <img src={click_on}
@@ -98,46 +95,34 @@ const PromoPage = ({ lang, userName }) => (
 
         <section className={style['advantages-section']}>
             <div className={style['advantage-wrapper']}>
-                <h3>Преимущества Click On App</h3>
+                <h3>{textForApp[lang].promo.description[5]}</h3>
                 <ul className={style['advantage-list']}>
                     <li>
                         <div>
                             <img src={checked} alt="checked" />
-                            <span>
-                                Учебник всегда под рукой
-                            </span>
+                            <span>{textForApp[lang].promo.benefits[0]}</span>
                         </div>
                         <div>
                             <img src={checked} alt="checked" />
-                            <span>
-                                Автоматическая проверка заданий
-                            </span>
+                            <span>{textForApp[lang].promo.benefits[1]}</span>
                         </div>
                         <div>
                             <img src={checked} alt="checked" />
-                            <span>
-                                Дополнительный модуль по информационным технологиям
-                            </span>
+                            <span>{textForApp[lang].promo.benefits[2]}</span>
                         </div>
                     </li>
                     <li>
                         <div>
                             <img src={checked} alt="checked" />
-                            <span>
-                                Словарь с изучаемыми словами
-                            </span>
+                            <span>{textForApp[lang].promo.benefits[3]}</span>
                         </div>
                         <div>
                             <img src={checked} alt="checked" />
-                            <span>
-                                Страница с изучаемыми правилами
-                            </span>
+                            <span>{textForApp[lang].promo.benefits[4]}</span>
                         </div>
                         <div>
                             <img src={checked} alt="checked" />
-                            <span>
-                                Красочное оформление
-                            </span>
+                            <span>{textForApp[lang].promo.benefits[5]}</span>
                         </div>
                     </li>
                 </ul>
@@ -147,25 +132,20 @@ const PromoPage = ({ lang, userName }) => (
         <section className={style['method-description']}>
             <div className={style['method-description_wrapper']}>
                 <div className={style['description-article']}>
-                    <h3>
-                        Процесс обучения в Click On App
-                    </h3>
+                    <h3>{textForApp[lang].promo.description[6]}</h3>
                     <ul>
-                        <li>Изучайте правила и выполняйте задания на них в <b>Student's Book</b></li>
-                        <li>Отрабатывайте полученные знания в <b>Workbook</b></li>
-                        <li>После каждого второго раздела закрепляйте пройденный материал в <b>Tests</b></li>
+                        <li>{parse(textForApp[lang].promo.process[0])}</li>
+                        <li>{parse(textForApp[lang].promo.process[1])}</li>
+                        <li>{parse(textForApp[lang].promo.process[2])}</li>
                     </ul>
-                    <p>
-                        Упражняйтесь как можно чаще, и всегда прилагайте максимум усилий,
-                        чтобы достичь наилучших результатов!
-                    </p>
+                    <p>{textForApp[lang].promo.process[3]}</p>
                 </div>
             </div>
         </section>
 
         <section className={style['products-section']}>
             <div className={style['products-title']}>
-                <h3>Начните изучать английский прямо сейчас!</h3>
+                <h3>{textForApp[lang].promo.description[7]}</h3>
             </div>
             <ul className={style['products-list']}>
                 <li>
@@ -175,8 +155,8 @@ const PromoPage = ({ lang, userName }) => (
                                 <img src={tasks} alt="" />
                             </div>
                             <div>
-                                <h3>Упражнения</h3>
-                                <span>Отрабатывай пройденный материал</span>
+                                <h3>{textForApp[lang].links[3]}</h3>
+                                <span>{textForApp[lang].promo.links[0]}</span>
                             </div>
                         </a>
                     </NavLink>
@@ -186,8 +166,8 @@ const PromoPage = ({ lang, userName }) => (
                                 <img src={lp} alt="" />
                             </div>
                             <div>
-                                <h3>Личный кабинет</h3>
-                                <span>Смотри свой прогресс и достижения</span>
+                                <h3>{textForApp[lang].links[7]}</h3>
+                                <span>{textForApp[lang].promo.links[1]}</span>
                             </div>
                         </a>
                     </NavLink>
@@ -199,8 +179,8 @@ const PromoPage = ({ lang, userName }) => (
                                 <img className={style.book} src={book} alt="" />
                             </div>
                             <div>
-                                <h3>Правила</h3>
-                                <span>Повторение изученных правил</span>
+                                <h3>{textForApp[lang].links[5]}</h3>
+                                <span>{textForApp[lang].promo.links[2]}</span>
                             </div>
                         </a>
                     </NavLink>
@@ -210,8 +190,8 @@ const PromoPage = ({ lang, userName }) => (
                                 <img src={dictionary} alt="" />
                             </div>
                             <div>
-                                <h3>Словарь</h3>
-                                <span>Повторение изученных слов</span>
+                                <h3>{textForApp[lang].links[4]}</h3>
+                                <span>{textForApp[lang].promo.links[3]}</span>
                             </div>
                         </a>
                     </NavLink>
