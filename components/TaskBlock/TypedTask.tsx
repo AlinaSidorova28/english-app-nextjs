@@ -2,7 +2,7 @@ import { Checkbox, Image, Radio, Row } from 'antd';
 import parse from 'html-react-parser';
 import React from 'react';
 
-import { ALPHABET } from '../../constants/constants';
+import { ALPHABET, TASKS_IN_TEST } from '../../constants/constants';
 import { GeneralTask, taskTypes } from '../../types/general';
 import { SimpleSpinner } from '../SimpleSpinner/SimpleSpinner';
 import style from './TaskBlock.module.scss';
@@ -10,9 +10,11 @@ import style from './TaskBlock.module.scss';
 interface ITypedTaskProps {
     task: GeneralTask;
     taskId: string;
+    isTest: boolean;
     moveNext: () => void;
     progress: Record<string, any>;
     updateProgress: (settings) => void;
+    disabled: boolean;
 }
 
 interface ITypedTaskState {
@@ -35,36 +37,78 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
         this.setInitialData();
     }
 
+    componentDidUpdate(prevProps: Readonly<ITypedTaskProps>) {
+        const { progress, taskId, isTest } = this.props;
+        const solvedTasks = Object.keys(progress?.[taskId])?.filter((key) => key.match(/\d+/));
+
+        if (JSON.stringify(progress) !== JSON.stringify(prevProps.progress)
+        && isTest && !solvedTasks.length) {
+            this.resetData();
+        }
+    }
+
     setInitialData() {
-        const { progress, taskId, task } = this.props;
+        const { progress, taskId, task, isTest } = this.props;
         const tasks = progress?.[taskId] ?? {};
         const currentTask = tasks[task.number] ?? {};
 
-        if (currentTask?.done) {
-            this.setState({ answers: currentTask?.answer, diff: [] });
+        if (currentTask?.done || (isTest && currentTask?.done !== undefined)) {
+            this.setState({
+                answers: currentTask?.answer,
+                diff: isTest ? this.setDifference(currentTask?.answer) : [],
+            });
         }
+    }
+
+    resetData() {
+        this.setState({ answers: [], diff: null });
     }
 
     formatProgress(done: boolean) {
         const { answers } = this.state;
-        const { progress, task, taskId, updateProgress } = this.props;
+        const { progress, task, taskId, updateProgress, isTest } = this.props;
         const tasks = progress[taskId] ?? {};
         const currentTask = tasks[task.number] ?? {};
-        const settings = {
-            progress: {
-                [taskId]: {
-                    ...tasks,
-                    [task.number]: {
-                        ...currentTask,
-                        answer: answers,
-                        attempts: currentTask.attempts
-                            ? currentTask.done && done ? currentTask.attempts : currentTask.attempts + 1
-                            : 1,
-                        done,
+        const testAttempts = tasks.attempts ? tasks.attempts : 1;
+        const result = tasks.result ? [...tasks.result] : [0];
+        const currentResult = result[tasks.attempts ? tasks.attempts - 1 : 0] ?? 0;
+
+        result[tasks.attempts ? tasks.attempts - 1 : 0] = done
+            ? currentResult + 1
+            : currentResult;
+
+        const settings = !isTest
+            ? {
+                progress: {
+                    [taskId]: {
+                        ...tasks,
+                        [task.number]: {
+                            ...currentTask,
+                            answer: answers,
+                            attempts: currentTask.attempts
+                                ? currentTask.done && done ? currentTask.attempts : currentTask.attempts + 1
+                                : 1,
+                            done,
+                        },
                     },
                 },
-            },
-        };
+            }
+            : {
+                progress: {
+                    [taskId]: {
+                        ...tasks,
+                        attempts: testAttempts,
+                        result,
+                        done: Object.keys(tasks)?.filter((key) => key.match(/\d+/))
+                            ?.length === TASKS_IN_TEST - 1,
+                        [task.number]: {
+                            ...currentTask,
+                            answer: answers,
+                            done,
+                        },
+                    },
+                },
+            };
         updateProgress(settings);
     }
 
@@ -112,9 +156,8 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
         }
     }
 
-    checkAnswer() {
-        const { answers } = this.state;
-        const { task, moveNext } = this.props;
+    setDifference(answers) {
+        const { task } = this.props;
         const diff: any = [];
 
         switch (task.type) {
@@ -164,7 +207,14 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
             break;
         }
 
-        if (!diff.length) {
+        return diff;
+    }
+
+    checkAnswer() {
+        const { isTest, moveNext } = this.props;
+        const diff = this.setDifference(this.state.answers);
+
+        if (isTest) {
             moveNext();
         }
 
@@ -174,7 +224,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
 
     render() {
         const { isLoading, diff, answers } = this.state;
-        const { task } = this.props;
+        const { task, disabled } = this.props;
 
         switch (task.type) {
         case taskTypes.CHECK:
@@ -192,13 +242,14 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                             : diff?.length === 0 ? 'right' : ''}
                                                   value={index + 1}
                                                   checked={answers?.includes(index + 1)}
+                                                  disabled={disabled}
                                                   onChange={(e) => this.onChange.call(this, e, index)}>
                                             {`${index + 1}. ${parse(el)}`}
                                         </Checkbox>
                                     </Row>;
                                 })}
                             </div>
-                            <button className={style.button_check}
+                            <button className={`${style.button_check} ${disabled ? style.hidden : ''}`}
                                     onClick={this.checkAnswer.bind(this)}
                                     type="submit">
                                 {isLoading ? <SimpleSpinner/> : 'Check'}
@@ -225,6 +276,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                             return <Radio key={`${i}-${index}-${answer}`}
                                                           value={index + 1}
                                                           checked={answers?.[i] === index + 1}
+                                                          disabled={disabled}
                                                           onChange={(e) => this.onChange.call(this, e, i)}
                                                           className={diff?.[i] === index + 1
                                                               ? 'wrong'
@@ -235,7 +287,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                     </div>;
                                 })}
                             </div>
-                            <button className={style.button_check}
+                            <button className={`${style.button_check} ${disabled ? style.hidden : ''}`}
                                     onClick={this.checkAnswer.bind(this)}
                                     type="submit">
                                 {isLoading ? <SimpleSpinner/> : 'Check'}
@@ -272,16 +324,17 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                         return <span key={`answer-${task.number}-${index}`}>
                                             {`${ index +1 } – `}
                                             <input maxLength={1}
+                                                   disabled={disabled}
                                                    value={answers?.[index] ? ALPHABET[(answers[index] as number) - 1] : ''}
-                                                   className={diff?.[index]
+                                                   className={`${disabled ? style.disabled : ''} ${diff?.[index]
                                                        ? style.wrong
-                                                       : diff?.length === 0 ? style.right : ''}
+                                                       : diff?.length === 0 ? style.right : ''}`}
                                                    onChange={(e) => this.onChange.call(this, e, index)}/>
                                         </span>;
                                     })}
                                 </div>
                             </div>
-                            <button className={style.button_check}
+                            <button className={`${style.button_check} ${disabled ? style.hidden : ''}`}
                                     onClick={this.checkAnswer.bind(this)}
                                     type="submit">
                                 {isLoading ? <SimpleSpinner/> : 'Check'}
@@ -315,9 +368,10 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                                        name={(inputIndex++).toString()}
                                                        value={answers?.[inputIndex - 1] ?? ''}
                                                        autoComplete={'off'}
-                                                       className={diff?.[inputIndex - 1]
+                                                       disabled={disabled}
+                                                       className={`${disabled ? style.disabled : ''} ${diff?.[inputIndex - 1]
                                                            ? style.wrong
-                                                           : diff?.length === 0 ? style.right : ''}
+                                                           : diff?.length === 0 ? style.right : ''}`}
                                                        onChange={(e) => this.onChange.call(this, e, +e.target.name)}
                                                        size={length - 4 <= 6 ? 6 : length - 4}/>
                                                 {parse(splited[1])}
@@ -326,7 +380,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                     </span>;
                                 })}
                             </div>
-                            <button className={style.button_check}
+                            <button className={`${style.button_check} ${disabled ? style.hidden : ''}`}
                                     onClick={this.checkAnswer.bind(this)}
                                     type="submit">
                                 {isLoading ? <SimpleSpinner/> : 'Check'}
@@ -367,11 +421,13 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                                 const length = input?.length;
 
                                                 return <textarea maxLength={100}
+                                                                 disabled={disabled}
                                                                  key={`input-${task.number}-${i}-${index}`}
                                                                  value={answers?.[i -1]?.[index]}
-                                                                 className={diff?.[i - 1]?.[index]
+                                                                 className={`${disabled ? style.disabled : ''} 
+                                                                    ${diff?.[i - 1]?.[index]
                                                                      ? style.wrong
-                                                                     : diff?.length === 0 ? style.right : ''}
+                                                                     : diff?.length === 0 ? style.right : ''}`}
                                                                  onChange={(e) =>
                                                                      this.onChange.call(this, e, i - 1, index)}
                                                                  rows={length >= 75 ? 3 : length >= 40 ? 2 : 1}
@@ -382,7 +438,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
 
                                 })}
                             </div>
-                            <button className={style.button_check}
+                            <button className={`${style.button_check} ${disabled ? style.hidden : ''}`}
                                     onClick={this.checkAnswer.bind(this)}
                                     type="submit">
                                 {isLoading ? <SimpleSpinner/> : 'Check'}
