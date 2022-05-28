@@ -15,6 +15,14 @@ const textForApp = {
             reset: 'Reset statistics',
             check: 'check',
             ok: 'confirm',
+            again: 'Try again',
+            result: 'Result',
+        },
+        modal: {
+            questions: [
+                'Wanna try again?',
+            ],
+            answers: ['Yes', 'No'],
         },
         message: [
             'Input a value',
@@ -100,6 +108,14 @@ const textForApp = {
             reset: 'Сбросить прогресс',
             check: 'проверить',
             ok: 'далее',
+            again: 'Пройти заново',
+            result: 'Результат',
+        },
+        modal: {
+            questions: [
+                'Хотите пройти заново?',
+            ],
+            answers: ['Да', 'Нет'],
         },
         message: [
             'Введите значение',

@@ -57,6 +57,7 @@ a {
 .dictionary,
 .rules,
 .tasks {
+  position: relative;
   background: #f8f2ee;
   min-height: calc(100vh - 115px);
 
