@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 import TaskBlock from '../../components/TaskBlock/TaskBlock';
-import { LEVELS } from '../../constants/constants';
+import { LEVELS, LEVELS_STRING } from '../../constants/constants';
 import { LanguageType } from '../../types/general';
 
 interface ITasksProps {
@@ -42,10 +42,10 @@ export default class Tasks extends PureComponent<ITasksProps, ITasksState> {
                 <div className={'container'}>
                     <Tabs>
                         <TabList className={'tab-list'}>
-                            <Tab className={'tab a2-tasks'}>Pre Intermediate</Tab>
-                            <Tab className={'tab b1-tasks'}>Intermediate</Tab>
-                            <Tab className={'tab b2-tasks'}>Upper Intermedite</Tab>
-                            <Tab className={'tab it-tasks'}>IT Sphere</Tab>
+                            <Tab className={'tab a2-tasks'}>{LEVELS_STRING.a2}</Tab>
+                            <Tab className={'tab b1-tasks'}>{LEVELS_STRING.b1}</Tab>
+                            <Tab className={'tab b2-tasks'}>{LEVELS_STRING.b2}</Tab>
+                            <Tab className={'tab it-tasks'}>{LEVELS_STRING.IT}</Tab>
                         </TabList>
                         {LEVELS.map((el) => (
                             <TabPanel className={'tab-panel'} key={el}>

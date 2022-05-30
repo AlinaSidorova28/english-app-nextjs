@@ -40,12 +40,34 @@ const updateSettings = async (req, res) => {
     }
 };
 
+const resetSettings = async (req, res) => {
+    const { userId } = req.query;
+    try {
+        const store = documentStore;
+        const session = store.openSession('english-app');
+        const settings: Settings = await session
+            .query<Settings>({ collection: 'Settings' })
+            .waitForNonStaleResults()
+            .whereEquals('user', userId)
+            .singleOrNull() ?? {} as Settings;
+
+        settings.progress = {};
+
+        await session.saveChanges();
+        res.status(RESPONSE_STATUSES.CODE_200).json({ status: 'success', settings });
+    } catch (error) {
+        res.status(RESPONSE_STATUSES.CODE_500).json({ status: 'error', error: 'Something went wrong' });
+    }
+};
+
 export default async (req, res) => {
     switch (req.method) {
     case 'GET':
         return getSettingsByUserId(req, res);
     case 'POST':
         return updateSettings(req, res);
+    case 'DELETE':
+        return resetSettings(req, res);
     default:
         return res.status(RESPONSE_STATUSES.CODE_404).json({ error: 'Not found' });
     }

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 import Rule from '../components/Rule/Rule';
-import { LEVELS } from '../constants/constants';
+import { LEVELS, LEVELS_STRING } from '../constants/constants';
 import { LanguageType } from '../types/general';
 
 interface IRulesProps {
@@ -42,10 +42,10 @@ export default class Dictionary extends PureComponent<IRulesProps, IRulesState> 
                 <div className={'container'}>
                     <Tabs>
                         <TabList className={'tab-list'}>
-                            <Tab className={'tab a2-rules'}>Pre Intermediate</Tab>
-                            <Tab className={'tab b1-rules'}>Intermediate</Tab>
-                            <Tab className={'tab b2-rules'}>Upper Intermedite</Tab>
-                            <Tab className={'tab it-rules'}>IT Sphere</Tab>
+                            <Tab className={'tab a2-rules'}>{LEVELS_STRING.a2}</Tab>
+                            <Tab className={'tab b1-rules'}>{LEVELS_STRING.b1}</Tab>
+                            <Tab className={'tab b2-rules'}>{LEVELS_STRING.b2}</Tab>
+                            <Tab className={'tab it-rules'}>{LEVELS_STRING.IT}</Tab>
                         </TabList>
                         {LEVELS.map((el) => (
                             <TabPanel className={'tab-panel'} key={el}>

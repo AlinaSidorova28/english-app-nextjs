@@ -1,5 +1,5 @@
-.tasks_wrapper {
-  padding: 20px 30px 20px 30px;
+.tasks-wrapper {
+  padding: 20px 30px;
   border: 1px solid #c4c4c4;
   border-radius: 10px;
   min-height: 74vh;
@@ -21,33 +21,6 @@
       font-size: 18px;
       text-align: center;
       padding: 1em;
-    }
-
-    .reset-button {
-      font-family: Rubik;
-      align-self: end;
-      width: 200px;
-      height: 34px;
-      font-size: 18px;
-      line-height: 21px;
-      color: #ffffff;
-      background: #25b6d2;
-      outline: none;
-      border-radius: 320px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-      transition: 0.2s;
-
-      img {
-        filter: brightness(0) invert(1);
-        margin-right: 5px;
-      }
-
-      &:hover {
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-      }
     }
   }
 }

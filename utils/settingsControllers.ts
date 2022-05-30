@@ -32,4 +32,18 @@ const updateSettings = async (settings) => {
     }
 };
 
-export { getSettingsByUserId, updateSettings };
+const resetSettings = async () => {
+    const { userId } = parseCookies();
+    try {
+        await fetch(`${process.env.BASE_URI || ''}/api/settings/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((response) => response.json());
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+export { getSettingsByUserId, updateSettings, resetSettings };

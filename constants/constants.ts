@@ -29,6 +29,13 @@ export const BOOKS = {
 
 export const LEVELS = ['a2', 'b1', 'b2', 'IT'];
 
+export const LEVELS_STRING = {
+    a2: 'Pre Intermediate',
+    b1: 'Intermediate',
+    b2: 'Upper Intermediate',
+    IT: 'IT Sphere',
+};
+
 export const RESPONSE_STATUSES = {
     CODE_200: 200,
     CODE_302: 302,

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 import Word from '../components/Word/Word';
-import { LEVELS } from '../constants/constants';
+import { LEVELS, LEVELS_STRING } from '../constants/constants';
 import { LanguageType } from '../types/general';
 
 interface IDictionaryProps {
@@ -42,10 +42,10 @@ export default class Dictionary extends PureComponent<IDictionaryProps, IDiction
                 <div className={'container'}>
                     <Tabs>
                         <TabList className={'tab-list'}>
-                            <Tab className={'tab a2-words'}>Pre Intermediate</Tab>
-                            <Tab className={'tab b1-words'}>Intermediate</Tab>
-                            <Tab className={'tab b2-words'}>Upper Intermedite</Tab>
-                            <Tab className={'tab it-words'}>IT Sphere</Tab>
+                            <Tab className={'tab a2-words'}>{LEVELS_STRING.a2}</Tab>
+                            <Tab className={'tab b1-words'}>{LEVELS_STRING.b1}</Tab>
+                            <Tab className={'tab b2-words'}>{LEVELS_STRING.b2}</Tab>
+                            <Tab className={'tab it-words'}>{LEVELS_STRING.IT}</Tab>
                         </TabList>
                         {LEVELS.map((el) => (
                             <TabPanel className={'tab-panel'} key={el}>

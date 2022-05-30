@@ -32,4 +32,21 @@ const getTaskById = async (taskId) => {
     }
 };
 
-export { getUnitsByModuleId, getTaskById };
+const getAllTasks = async () => {
+    try {
+        const res = await fetch(`${process.env.BASE_URI || ''}/api/tasks`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((response) => response.json());
+
+        return res;
+    } catch (error) {
+        console.error(error);
+
+        return { error };
+    }
+};
+
+export { getUnitsByModuleId, getTaskById, getAllTasks };
