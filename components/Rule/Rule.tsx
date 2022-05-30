@@ -1,5 +1,4 @@
 import { Image, Menu } from 'antd';
-import { SubMenu } from 'rc-menu';
 import React from 'react';
 
 import textForApp from '../../constants/translate';
@@ -60,24 +59,35 @@ export default class Rule extends React.PureComponent<IRuleProps, IRuleState> {
 
         return (
             <div className={style.rule}>
-                <Menu mode="inline" openKeys={openKeys} onOpenChange={this.onOpenChange.bind(this)} style={{ width: '100%' }}>
-                    {rules.sort((a, b) => a.id.localeCompare(b.id)).map((rule, index) => {
-                        return (<SubMenu key={`Unit-${index}`} title={`Unit ${index + 1}`}>
-                            <Menu.Item className={'rules-item'} key={`item-${index + 1}`} disabled>
-                                {rule.unitRules.map((el: IRule) => {
-                                    const { content, name } = el;
+                <Menu mode="inline"
+                      openKeys={openKeys}
+                      onOpenChange={this.onOpenChange.bind(this)}
+                      style={{ width: '100%' }}
+                      items={
+                          rules.sort((a, b) => a.id.localeCompare(b.id)).map((rule, index) => {
+                              return {
+                                  label: `Unit ${index + 1}`,
+                                  key: `Unit-${index}`,
+                                  children: [
+                                      {
+                                          label: rule.unitRules.map((el: IRule) => {
+                                              const { content, name } = el;
 
-                                    return (<div key={`${rule.id}-${name}`}>
-                                        <h2>{name}</h2>
-                                        <div className={style['image-wrapper']}>
-                                            {content.map((img) => <Image src={`/${img}`} key={img}/>)}
-                                        </div>
-                                    </div>);
-                                })}
-                            </Menu.Item>
-                        </SubMenu>);
-                    })}
-                </Menu>
+                                              return (<div key={`${rule.id}-${name}`}>
+                                                  <h2>{name}</h2>
+                                                  <div className={style['image-wrapper']}>
+                                                      {content.map((img) => <Image src={`/${img}`} key={img}/>)}
+                                                  </div>
+                                              </div>);
+                                          }),
+                                          key: `item-${index + 1}`,
+                                          className: 'rules-item',
+                                          disabled: true,
+                                      },
+                                  ],
+                              };
+                          })
+                      }/>
             </div>
         );
     }

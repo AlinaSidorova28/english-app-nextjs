@@ -1,5 +1,4 @@
 import { Menu } from 'antd';
-import { SubMenu } from 'rc-menu';
 import React from 'react';
 
 import { BOOKS } from '../../constants/constants';
@@ -62,32 +61,46 @@ export default class TaskBlock extends React.PureComponent<ITaskBlockProps, ITas
 
         return (
             <div className={style['task-block']}>
-                <Menu mode="inline" openKeys={openKeys} onOpenChange={this.onOpenChange.bind(this)} style={{ width: '100%' }}>
-                    {units.sort((a, b) => a.id.localeCompare(b.id)).map((unit, index) => {
-                        return (<SubMenu key={`Unit-${index}`} title={`Unit ${index + 1}. ${unit.name}`}>
-                            <Menu.Item className={'task-item'}
-                                       key={`sb-${index + 1}`}>
-                                <NavLink href={`/tasks/${unit.sb}`}>
-                                    <a>{BOOKS.sb}</a>
-                                </NavLink>
-                            </Menu.Item>
-                            <Menu.Item className={'task-item'}
-                                       key={`wb-${index + 1}`}>
-                                <NavLink href={`/tasks/${unit.wb}`}>
-                                    <a>{BOOKS.wb}</a>
-                                </NavLink>
-                            </Menu.Item>
-                            {index % 2
-                                ? <Menu.Item className={'task-item'}
-                                             key={`tb-${index + 1}`}>
-                                    <NavLink href={`/tasks/${unit.tb}`}>
-                                        <a>{`${BOOKS.tb} ${index}-${index + 1}`}</a>
-                                    </NavLink>
-                                </Menu.Item>
-                                : null}
-                        </SubMenu>);
-                    })}
-                </Menu>
+                <Menu mode="inline"
+                      openKeys={openKeys}
+                      onOpenChange={this.onOpenChange.bind(this)}
+                      style={{ width: '100%' }}
+                      items={
+                          units.sort((a, b) => a.id.localeCompare(b.id)).map((unit, index) => {
+                              const item = {
+                                  label: `Unit ${index + 1}. ${unit.name}`,
+                                  key: `Unit-${index}`,
+                                  children: [
+                                      {
+                                          label: <NavLink href={`/tasks/${unit.sb}`}>
+                                              <a>{BOOKS.sb}</a>
+                                          </NavLink>,
+                                          key: `sb-${index + 1}`,
+                                          className: 'task-item',
+                                      },
+                                      {
+                                          label: <NavLink href={`/tasks/${unit.wb}`}>
+                                              <a>{BOOKS.wb}</a>
+                                          </NavLink>,
+                                          key: `wb-${index + 1}`,
+                                          className: 'task-item',
+                                      },
+                                  ],
+                              };
+
+                              if (index % 2) {
+                                  item.children.push({
+                                      label: <NavLink href={`/tasks/${unit.tb}`}>
+                                          <a>{`${BOOKS.tb} ${index}-${index + 1}`}</a>
+                                      </NavLink>,
+                                      key: `tb-${index + 1}`,
+                                      className: 'task-item',
+                                  });
+                              }
+
+                              return item;
+                          })
+                      }/>
             </div>
         );
     }

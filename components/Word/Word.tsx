@@ -1,5 +1,4 @@
 import { Menu } from 'antd';
-import { SubMenu } from 'rc-menu';
 import React from 'react';
 
 import textForApp from '../../constants/translate';
@@ -60,17 +59,28 @@ export default class Word extends React.PureComponent<IWordProps, IWordState> {
 
         return (
             <div className={style.word}>
-                <Menu mode="inline" openKeys={openKeys} onOpenChange={this.onOpenChange.bind(this)} style={{ width: '100%' }}>
-                    {words.sort((a, b) => a.id.localeCompare(b.id)).map((word: IWord, index) => {
-                        return (<SubMenu key={`Unit-${index}`} title={`Unit ${index + 1}`}>
-                            <Menu.Item className={'words-item'} key={`item-${index + 1}`} disabled>
-                                {word.content.map((img) => {
-                                    return (<img src={`/${img}`} key={img}/>);
-                                })}
-                            </Menu.Item>
-                        </SubMenu>);
-                    })}
-                </Menu>
+                <Menu mode="inline"
+                      openKeys={openKeys}
+                      onOpenChange={this.onOpenChange.bind(this)}
+                      style={{ width: '100%' }}
+                      items={
+                          words.sort((a, b) => a.id.localeCompare(b.id)).map((word: IWord, index) => {
+                              return {
+                                  label: `Unit ${index + 1}`,
+                                  key: `Unit-${index}`,
+                                  children: [
+                                      {
+                                          label: word.content.map((img) => {
+                                              return (<img src={`/${img}`} key={img}/>);
+                                          }),
+                                          key: `item-${index + 1}`,
+                                          className: 'words-item',
+                                          disabled: true,
+                                      },
+                                  ],
+                              };
+                          })
+                      }/>
             </div>
         );
     }
