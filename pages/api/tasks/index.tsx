@@ -1,6 +1,6 @@
 import { RESPONSE_STATUSES } from '../../../constants/constants';
-import documentStore from '../../../utils/documentStore';
 import Task from '../../../models/Task';
+import documentStore from '../../../utils/documentStore';
 
 const getTasks = async (req, res) => {
     try {

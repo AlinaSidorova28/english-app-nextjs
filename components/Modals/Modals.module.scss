@@ -1,0 +1,50 @@
+.modal {
+  .confirm_content,
+  .info_content {
+    font-size: 16px;
+  }
+
+  .confirm_content {
+    text-align: center;
+  }
+
+  .warn {
+    color: #faad14;
+    margin-right: 10px;
+    font-size: 20px;
+  }
+
+  .buttons_wrapper {
+    display: flex;
+    justify-content: space-evenly;
+
+    button {
+      font-family: Rubik;
+      align-self: end;
+      width: 100px;
+      height: 34px;
+      font-size: 18px;
+      line-height: 21px;
+      color: #ffffff;
+      background: #32bea6;
+      outline: none;
+      border-radius: 320px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 4px rgb(0 0 0 / 20%);
+      transition: 0.2s;
+
+      &:hover {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.modal.confirm {
+  height: 180px;
+  min-width: 280px;
+  max-width: 400px;
+  width: 35%;
+}

@@ -12,23 +12,37 @@ const textForApp = {
         ],
         inscription: {
             back: 'Back to menu',
-            reset: 'Reset statistics',
+            reset: 'Reset progress',
             check: 'check',
             ok: 'confirm',
             again: 'Try again',
             result: 'Result',
+            lang: 'App language',
+            loading: 'Loading',
         },
         modal: {
+            headers: [
+                'Confirm action',
+            ],
             questions: [
                 'Wanna try again?',
+                'Are you sure that you want to reset all progress?',
             ],
             answers: ['Yes', 'No'],
         },
+        table: [
+            'Done: ',
+            'In total: ',
+            'Attempt',
+            'Task',
+            'Attempts: ',
+        ],
         message: [
             'Input a value',
             'Password should contain not less than 8 characters, at least 1 digit, 1 lowercase character and 1 uppercase character',
             'Passwords should match',
             'Coming soon! Check for updates :)',
+            'You haven\'t completed any task yet',
         ],
         promo: {
             description: [
@@ -110,18 +124,32 @@ const textForApp = {
             ok: 'далее',
             again: 'Пройти заново',
             result: 'Результат',
+            lang: 'Язык приложения',
+            loading: 'Загрузка',
         },
         modal: {
+            headers: [
+                'Подтвердите действие',
+            ],
             questions: [
                 'Хотите пройти заново?',
+                'Вы уверены, что хотите сбросить весь прогресс?',
             ],
             answers: ['Да', 'Нет'],
         },
+        table: [
+            'Выполнено: ',
+            'Всего: ',
+            'Попытка',
+            'Задание',
+            'Попыток: ',
+        ],
         message: [
             'Введите значение',
             'Пароль должен состоять не менее, чем из 8 знаков, содержать хотя бы 1 цифру, 1 маленькую букву и 1 большую',
             'Пароли должны совпадать',
             'Уже скоро! Следите за обновлениями :)',
+            'Вы пока не выполнили ни одного задания',
         ],
         promo: {
             description: [

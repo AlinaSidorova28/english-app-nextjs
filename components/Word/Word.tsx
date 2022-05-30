@@ -51,7 +51,7 @@ export default class Word extends React.PureComponent<IWordProps, IWordState> {
         const { lang } = this.props;
 
         if (isLoading) {
-            return <Spinner />;
+            return <Spinner lang={lang}/>;
         }
 
         if (!words.length) {

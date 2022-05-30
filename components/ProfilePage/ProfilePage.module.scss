@@ -1,0 +1,38 @@
+.profile-wrapper {
+  max-width: 853px;
+  margin: 0 auto;
+  font-size: 16px;
+
+  .profile-block {
+    background: #ffffff;
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    padding: 20px 30px;
+    width: 100%;
+    min-height: 66vh;
+
+    .lang {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1em;
+      padding: 10px 0;
+      font-size: 18px;
+      font-weight: bold;
+      border-bottom: 1px solid #c4c4c4;
+    }
+
+    .statistics {
+      margin-top: 20px;
+    }
+
+    .table_wrapper {
+      overflow-x: scroll;
+    }
+  }
+
+  .button_container {
+    margin-top: 20px;
+    text-align: center;
+  }
+}

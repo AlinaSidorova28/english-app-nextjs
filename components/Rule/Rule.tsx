@@ -51,7 +51,7 @@ export default class Rule extends React.PureComponent<IRuleProps, IRuleState> {
         const { lang } = this.props;
 
         if (isLoading) {
-            return <Spinner />;
+            return <Spinner lang={lang}/>;
         }
 
         if (!rules.length) {

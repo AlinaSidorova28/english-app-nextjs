@@ -1,7 +1,8 @@
+import { ReloadOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
+import ConfirmModal from '../../components/Modals/ConfirmModal';
 import NavLink from '../../components/NavLink/NavLink';
 import Spinner from '../../components/Spinner/Spinner';
 import TypedTask from '../../components/TaskBlock/TypedTask';
@@ -129,9 +130,9 @@ const Tasks = ({ settings, lang }) => {
                     </NavLink>
                     <h1>{moduleName}</h1>
                 </div>
-                <div className={style.tasks_wrapper}>
+                <div className={style['tasks-wrapper']}>
                     {isLoading
-                        ? <Spinner/>
+                        ? <Spinner lang={lang}/>
                         : <>
                             {tasks.task?.map((task: GeneralTask, index) => {
                                 if ((isTest && index <= solvedTasks) || !isTest) {
@@ -150,9 +151,9 @@ const Tasks = ({ settings, lang }) => {
                             {solvedTasks === TASKS_IN_TEST
                                 && <div className={style.reset}>
                                     {result}
-                                    <button className={style['reset-button']}
+                                    <button className="reset-button"
                                             onClick={showModal.bind(null, true)}>
-                                        <img src={'/reset.png'}/> {textForApp[lang].inscription.again}
+                                        <ReloadOutlined className="img"/>{textForApp[lang].inscription.again}
                                     </button>
                                 </div>}
                         </>}

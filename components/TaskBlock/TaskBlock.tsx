@@ -53,7 +53,7 @@ export default class TaskBlock extends React.PureComponent<ITaskBlockProps, ITas
         const { lang } = this.props;
 
         if (isLoading) {
-            return <Spinner />;
+            return <Spinner lang={lang}/>;
         }
 
         if (!units.length) {

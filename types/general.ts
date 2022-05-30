@@ -3,6 +3,11 @@ export enum LanguageType {
     ru = 'ru',
 }
 
+export enum LanguageString {
+    en = 'English',
+    ru = 'Русский',
+}
+
 export enum taskTypes {
     MATCH = 'match',
     CHOOSE = 'choose',
