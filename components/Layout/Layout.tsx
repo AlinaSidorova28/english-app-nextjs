@@ -7,25 +7,36 @@ import { LanguageType } from '../../types/general';
 import redirectTo from '../../utils/redirectTo';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
+import Spinner from '../Spinner/Spinner';
 
 export default function Layout({ children }) {
     const [lang, setLang] = useState(LanguageType.ru);
     const [userName, setUserName] = useState<string | undefined>(undefined);
+    const [shouldRedirect, setShouldRedirect] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
+
+    useEffect(() => {
+        setIsLoading(false);
+    }, []);
 
     useEffect(() => {
         const { userName } = nookies.get(null);
         const { lang } = children?.props;
+        const shouldRedirect = !userName && router.pathname !== '/login' && router.pathname !== '/';
 
-        if (!userName && router.pathname !== '/login' && router.pathname !== '/promo' && router.pathname !== '/') {
+        if (shouldRedirect) {
             redirectTo('/');
         }
 
         setLang(lang as LanguageType);
         setUserName(userName);
+        setShouldRedirect(shouldRedirect);
     }, [lang, userName, router]);
 
-    const shouldRedirect = (!userName && router.pathname !== '/login' && router.pathname !== '/promo' && router.pathname !== '/');
+    if (isLoading) {
+        return <Spinner/>;
+    }
 
     return (
         <>

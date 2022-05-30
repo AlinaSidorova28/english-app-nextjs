@@ -129,7 +129,7 @@ const Tasks = ({ settings, lang }) => {
                     </NavLink>
                     <h1>{moduleName}</h1>
                 </div>
-                <div className={style.tasks_wrapper}>
+                <div className={style['tasks-wrapper']}>
                     {isLoading
                         ? <Spinner/>
                         : <>

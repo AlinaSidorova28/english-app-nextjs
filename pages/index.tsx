@@ -7,13 +7,14 @@ import PromoPage from '../components/PromoPage/PromoPage';
 import { LanguageType } from '../types/general';
 import { store } from '../utils/store';
 
-interface IPromoProps {
+export interface IMainProps {
     lang: LanguageType;
     userName?: string;
+    settings: Record<string, any>;
 }
 
-const Home: NextPage<IPromoProps> = ({ ...props }) => {
-    const { lang, userName } = props;
+const Home: NextPage = ({ ...props }) => {
+    const { lang, userName } = props as IMainProps;
 
     return (
         <Provider store={store}>
