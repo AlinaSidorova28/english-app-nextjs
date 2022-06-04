@@ -7,6 +7,7 @@ import { logout } from '../../utils/authControllers';
 import NavLink from '../NavLink/NavLink';
 import style from './Header.module.scss';
 import userImg from './img/user.png';
+import { MenuOutlined } from '@ant-design/icons';
 
 interface IHeaderProps {
     lang: LanguageType;
@@ -15,6 +16,7 @@ interface IHeaderProps {
 
 interface IHeaderState {
     show: boolean;
+    showNavMenu: boolean;
     isRendered: boolean;
 }
 
@@ -23,6 +25,7 @@ class Header extends React.PureComponent<IHeaderProps, IHeaderState> {
         super(props);
         this.state = {
             show: false,
+            showNavMenu: false,
             isRendered: false,
         };
         this.showMenu = this.showMenu.bind(this);
@@ -34,6 +37,10 @@ class Header extends React.PureComponent<IHeaderProps, IHeaderState> {
             if ((e?.target as HTMLElement)?.className !== style.user) {
                 this.setState({ show: false });
             }
+
+            if ((e?.target as HTMLElement)?.className !== style.burger_wrapper) {
+                this.setState({ showNavMenu: false });
+            }
         });
     }
 
@@ -43,8 +50,14 @@ class Header extends React.PureComponent<IHeaderProps, IHeaderState> {
         }));
     }
 
+    showNavMenu() {
+        this.setState((prevState) => ({
+            showNavMenu: !prevState.showNavMenu,
+        }));
+    }
+
     render() {
-        const { show, isRendered } = this.state;
+        const { show, showNavMenu, isRendered } = this.state;
         const { lang, userName } = this.props;
 
         if (!isRendered) {
@@ -71,7 +84,10 @@ class Header extends React.PureComponent<IHeaderProps, IHeaderState> {
                             <a className={style.login}>{textForApp[lang].authorization.text[0]}</a>
                         </Link>}
                 </div>
-                <ul className={style.navigation}>
+                <div className={style.burger_wrapper}
+                     onClick={this.showNavMenu.bind(this)}/>
+                <MenuOutlined className={`${style.burger} ${showNavMenu ? style.rotate : ''}`}/>
+                <ul className={`${style.navigation} ${showNavMenu ? style.opened : ''}`}>
                     <li>
                         <NavLink href="/" activeClassName={style.active}>
                             <a>{textForApp[lang].links[2]}</a>

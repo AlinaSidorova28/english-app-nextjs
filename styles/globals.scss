@@ -66,18 +66,25 @@ a {
 }
 
 .error-section {
+  padding-top: 65px;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 50px);
 
   .error {
-    margin: 3px auto;
     text-align: center;
+
+    img {
+      max-width: 95vw;
+    }
   }
 }
 
 .tasks {
   .module-header {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 2fr 1fr;
     align-items: baseline;
 
     a {
@@ -87,6 +94,19 @@ a {
     h1 {
       justify-self: center;
     }
+
+    @media (max-width: 850px) {
+      grid-template-columns: none;
+
+      h1 {
+        font-size: 1.5rem;
+        grid-row-start: -1;
+      }
+
+      a {
+        margin-bottom: 10px;
+      }
+    }
   }
 }
 
@@ -94,14 +114,23 @@ a {
 .rules,
 .tasks,
 .profile {
+  padding-top: 65px;
   position: relative;
   background: #f8f2ee;
-  min-height: calc(100vh - 115px);
+  min-height: calc(100vh - 50px);
 
   .container {
     margin: 0 auto;
-    max-width: 1200px;
+    max-width: 1160px;
     padding: 35px 0;
+
+    @media (max-width: 1200px) {
+      margin: 0 20px;
+    }
+
+    @media (max-width: 574px) {
+      margin: 0 10px;
+    }
   }
 
   .reset-button {
@@ -129,6 +158,10 @@ a {
       box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
       cursor: pointer;
     }
+
+    @media (max-width: 593px) {
+      font-size: 16px;
+    }
   }
 
   .tab-list {
@@ -152,6 +185,16 @@ a {
     border-radius: 10px 10px 0 0;
     outline: none;
     user-select: none;
+
+    @media (max-width: 681px) {
+      width: 50%;
+      margin: 0;
+    }
+
+    @media (max-width: 574px) {
+      width: 100%;
+      margin: 0;
+    }
   }
 
   .a2-words,
@@ -195,6 +238,10 @@ a {
     border-bottom: 1px solid #c4c4c4;
     border-radius: 0 0 10px 10px;
     min-height: 66vh;
+
+    @media (max-width: 574px) {
+      padding: 20px 10px;
+    }
   }
 
   .ant-menu-inline .ant-menu-submenu {
@@ -211,6 +258,7 @@ a {
 
   .ant-menu-sub.ant-menu-inline > .ant-menu-item.rules-item {
     height: 100%;
+    padding: 0 24px !important;
 
      span {
       display: block;
@@ -219,10 +267,17 @@ a {
 
   .ant-menu-sub.ant-menu-inline > .ant-menu-item.words-item {
     height: 100%;
+    padding: 0 !important;
 
     span {
       display: flex;
       flex-wrap: wrap;
+    }
+
+    @media (max-width: 383px) {
+      img {
+        max-width: 277px;
+      }
     }
   }
 

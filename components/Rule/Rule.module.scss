@@ -10,5 +10,11 @@
 
   h2 {
     border-bottom: 1px solid #c4c4c4;
+
+    @media (max-width: 574px) {
+      font-size: 1.3rem;
+      line-height: 2rem;
+      white-space: pre-wrap;
+    }
   }
 }

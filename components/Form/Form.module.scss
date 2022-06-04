@@ -15,7 +15,8 @@ $media-width: 480px;
 
 .signin {
   @extend .flex-center;
-  min-height: 84vh;
+  padding-top: 65px;
+  min-height: calc(100vh - 50px);
   background-color: #f8f2ee;
 
   .signin__container {
@@ -23,6 +24,7 @@ $media-width: 480px;
     flex-direction: column;
     justify-content: space-around;
     padding-top: 58px;
+    margin: 20px auto;
     font-family: Rubik;
     font-style: normal;
     font-weight: normal;
