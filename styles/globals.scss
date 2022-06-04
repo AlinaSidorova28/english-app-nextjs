@@ -45,12 +45,17 @@ body {
     }
   }
 
+  .ant-modal-centered {
+    display: flex;
+    align-items: center;
+  }
+
   .ant-modal-title {
     font-size: 18px;
   }
 
   .ant-modal-body {
-    overflow: scroll;
+    overflow: auto;
     max-height: 75vh;
   }
 }
@@ -264,6 +269,8 @@ a {
       display: block;
     }
   }
+
+  // todo в профиле оверфлоу авто
 
   .ant-menu-sub.ant-menu-inline > .ant-menu-item.words-item {
     height: 100%;
