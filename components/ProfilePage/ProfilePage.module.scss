@@ -35,4 +35,23 @@
     margin-top: 20px;
     text-align: center;
   }
+
+  @media (max-width: 873px) {
+    margin: 0 10px;
+    font-size: 14px;
+
+    .profile-block {
+      .lang {
+        font-size: 16px;
+      }
+    }
+
+    h1 {
+      font-size: 1.3rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+  }
 }

@@ -27,7 +27,6 @@ interface ChangeLanguage {
     error: any;
 }
 
-// todo задавать настройки (язык) со старта из бд или ls
 export function setSettings(value: any, error?: any): SetSettings {
     return {
         type: SettingsActionType.SET_SETTINGS,

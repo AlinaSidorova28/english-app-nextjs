@@ -1,4 +1,5 @@
-$media-width: 574px;
+$media-width: 670px;
+$narrow-width: 560px;
 
 .hover {
   color: #25b6d2;
@@ -6,7 +7,8 @@ $media-width: 574px;
 }
 
 .header {
-  position: relative;
+  position: fixed;
+  width: 100%;
   display: flex;
   font-family: Rubik;
   font-style: normal;
@@ -16,12 +18,35 @@ $media-width: 574px;
   text-align: center;
   height: 65px;
   background-color: #ffffff;
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
   z-index: 5;
 
-  @media (max-width: $media-width) {
-    align-items: center;
-    height: 110px;
+  .burger_wrapper {
+    position: fixed;
+    right: 3.33%;
+    top: 20px;
+    filter: opacity(0.5);
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    z-index: 50;
+  }
+
+  .burger {
+    @extend .burger_wrapper;
+
+    display: none;
+    font-size: 25px;
+    z-index: 40;
+
+    @media (max-width: $narrow-width) {
+      display: block;
+    }
+  }
+
+  .rotate {
+    transform: rotate(90deg);
+    transition: 0.4s ease-in-out;
   }
 
   .user {
@@ -31,10 +56,6 @@ $media-width: 574px;
     border-radius: 50%;
     cursor: pointer;
 
-    @media (max-width: $media-width) {
-      position: absolute;
-    }
-
     &:hover {
       filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.2));
       transition: ease-in-out 0.2s;
@@ -42,6 +63,7 @@ $media-width: 574px;
   }
 
   .user-links {
+    opacity: 100%;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -54,10 +76,7 @@ $media-width: 574px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     z-index: 999;
-
-    @media (max-width: $media-width) {
-      top: 80px;
-    }
+    transition: ease-in-out 0.2s;
 
     span {
       display: inline-flex;
@@ -126,9 +145,24 @@ $media-width: 574px;
 
     @media (max-width: $media-width) {
       font-size: 0.8em;
-      flex-direction: column;
       margin: 0 auto;
     }
+
+    @media (max-width: $narrow-width) {
+      position: fixed;
+      flex-direction: column;
+      gap: 15px;
+      padding-top: 65px;
+      width: 200px;
+      height: 100vh;
+      right: -100vw;
+      top: 0;
+      box-shadow: -3px 0px 5px rgb(0 0 0 / 10%);
+      background: #ffffff;
+      z-index: 30;
+      animation-name: right;
+      transition: right 0.4s;
+  }
 
     li {
       margin: 0 1vw;
@@ -146,6 +180,11 @@ $media-width: 574px;
         background-color: #25b6d2;
         color: #ffffff;
         transition: ease-in-out 0.2s;
+
+        @media (max-width: $narrow-width) {
+          background-color: #ffffff;
+          color: #25b6d2;
+        }
       }
 
       a:hover {
@@ -154,12 +193,25 @@ $media-width: 574px;
     }
   }
 
+  .opened {
+    right: 0;
+  }
+
   a,
   .user-links {
     color: #37383c;
   }
 
   .hidden {
-    display: none;
+    opacity: 0;
+  }
+
+  @keyframes right {
+    from {
+      left: 100%;
+    }
+    to {
+      left: 0;
+    }
   }
 }

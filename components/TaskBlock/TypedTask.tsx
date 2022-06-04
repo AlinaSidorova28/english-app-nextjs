@@ -136,14 +136,11 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
             this.setState({ answers, diff: null });
             break;
         case taskTypes.WRITE:
-            event.target.size = length - 4 <= 6 ? 6 : length - 4;
+            event.target.size = length <= 6 ? 6 : length;
             answers[extIndex] = event.target.value;
             this.setState({ answers, diff: null });
             break;
         case taskTypes.WRITE_EXAMPLE:
-            // todo что делать с шириной для мобилок ??? (max-width: 243px; можно еще с height придумать)
-            event.target.rows = length >= 75 ? 3 : length >= 40 ? 2 : 1;
-
             if (!answers[extIndex]) {
                 answers[extIndex] = [];
             }
@@ -373,7 +370,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                                            ? style.wrong
                                                            : diff?.length === 0 ? style.right : ''}`}
                                                        onChange={(e) => this.onChange.call(this, e, +e.target.name)}
-                                                       size={length - 4 <= 6 ? 6 : length - 4}/>
+                                                       size={length <= 6 ? 6 : length}/>
                                                 {parse(splited[1])}
                                             </>
                                             : null}
@@ -418,8 +415,6 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                         <div>{parse(el)}</div>
                                         <div>
                                             {new Array(task.example.length).fill('').map((input, index) => {
-                                                const length = input?.length;
-
                                                 return <textarea maxLength={100}
                                                                  disabled={disabled}
                                                                  key={`input-${task.number}-${i}-${index}`}
@@ -430,7 +425,6 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                                                      : diff?.length === 0 ? style.right : ''}`}
                                                                  onChange={(e) =>
                                                                      this.onChange.call(this, e, i - 1, index)}
-                                                                 rows={length >= 75 ? 3 : length >= 40 ? 2 : 1}
                                                                  cols={60}/>;
                                             })}
                                         </div>
