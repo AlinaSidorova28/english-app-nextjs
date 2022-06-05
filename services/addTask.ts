@@ -11,7 +11,7 @@ export default async function addTask() {
         [],
     );
 
-    console.log(task);
+    // console.log(task);
     await session.store<Task>(task);
     await session.saveChanges();
 }

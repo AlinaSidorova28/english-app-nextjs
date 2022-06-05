@@ -16,7 +16,7 @@ export default async function addWord() {
         ],
     );
 
-    console.log(word);
+    // console.log(word);
     await session.store<Word>(word);
     await session.saveChanges();
 }

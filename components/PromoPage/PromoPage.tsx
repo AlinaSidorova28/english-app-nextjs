@@ -1,5 +1,7 @@
+import parse from 'html-react-parser';
 import React from 'react';
 
+import textForApp from '../../constants/translate';
 import NavLink from '../NavLink/NavLink';
 import englishman from './images/anglichanin.png';
 import book from './images/book.png';
@@ -15,8 +17,6 @@ import study from './images/stydied.png';
 import tasks from './images/tasks.png';
 import dictionary from './images/words.png';
 import style from './PromoPage.module.scss';
-import textForApp from '../../constants/translate';
-import parse from 'html-react-parser';
 
 const PromoPage = ({ lang, userName }) => (
     <div className={style['promo-section']}>

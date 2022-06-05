@@ -14,7 +14,7 @@ export default async function addUnit() {
         'a2-4-tb',
     );
 
-    console.log(unit);
+    // console.log(unit);
     await session.store<Unit>(unit);
     await session.saveChanges();
 }

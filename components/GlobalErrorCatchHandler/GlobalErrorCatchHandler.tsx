@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { Collapse } from '../Collapse/Collapse';
 import { CustomLink } from '../CustomLink/CustomLink';
 import { SimpleError } from '../SimpleError/SimpleError';
 import style from './GlobalErrorCatchHandler.module.scss';
@@ -49,7 +48,7 @@ export const ChunksErrorView = (error) => {
         </div>
 
         {error
-            ? <Collapse title={'Ошибка'} expandText={'Показать ошибку'} children={errorView} initialExpanded={false}/>
+            ? errorView
             : null
         }
     </div>;

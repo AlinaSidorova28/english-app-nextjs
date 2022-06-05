@@ -1,3 +1,4 @@
+import { MenuOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import React from 'react';
 
@@ -7,7 +8,6 @@ import { logout } from '../../utils/authControllers';
 import NavLink from '../NavLink/NavLink';
 import style from './Header.module.scss';
 import userImg from './img/user.png';
-import { MenuOutlined } from '@ant-design/icons';
 
 interface IHeaderProps {
     lang: LanguageType;

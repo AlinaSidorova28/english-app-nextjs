@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+
 import { RESPONSE_STATUSES } from '../../constants/constants';
 
 type Data = {

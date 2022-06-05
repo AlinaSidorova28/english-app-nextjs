@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ./**/** -c .eslintrc.json --ext js,jsx,tsx,ts > ./eslint-report.log",
-    "lint-fix": "eslint ./**/** -c .eslintrc.json --fix --ext ./**/*.ts*",
+    "lint": "eslint ./**/*.ts* -c .eslintrc.json --ext js,jsx,tsx,ts > ./eslint-report.log",
+    "lint-fix": "eslint ./**/*.ts* -c .eslintrc.json --fix --ext ./**/*.ts*",
     "stylelint": "stylelint **/*.*css > ./stylelint-report.log",
     "stylelint:fix": "stylelint **/*.*css --fix"
   },

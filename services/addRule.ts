@@ -33,7 +33,7 @@ export default async function addRule() {
         ],
     );
 
-    console.log(rule);
+    // console.log(rule);
     await session.store<Rule>(rule);
     await session.saveChanges();
 }
