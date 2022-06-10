@@ -39,7 +39,9 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
 
     componentDidUpdate(prevProps: Readonly<ITypedTaskProps>) {
         const { progress, taskId, isTest } = this.props;
-        const solvedTasks = Object.keys(progress?.[taskId])?.filter((key) => key.match(/\d+/));
+        const solvedTasks = progress?.[taskId]
+            ? Object.keys(progress?.[taskId])?.filter((key) => key.match(/\d+/))
+            : [];
 
         if (JSON.stringify(progress) !== JSON.stringify(prevProps.progress)
         && isTest && !solvedTasks.length) {
