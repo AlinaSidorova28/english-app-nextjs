@@ -132,15 +132,19 @@ export default class StatisticsTable extends PureComponent<IStatisticsTableProps
                                             </div>
                                         </td>
                                         <td>
-                                            <div>
-                                                {`${textForApp[lang].table[0]}${this.countDone(el[1].wb)}`}
-                                                <InfoCircleOutlined className={'info'}
-                                                                    onClick={this.showFullStatistics
-                                                                        .bind(this, el[1].wb, `${BOOKS.wb}, 
+                                            {taskList[`${level}-${el[0]}-wb`]?.length
+                                                ? <>
+                                                    <div>
+                                                        {`${textForApp[lang].table[0]}${this.countDone(el[1].wb)}`}
+                                                        <InfoCircleOutlined className={'info'}
+                                                                            onClick={this.showFullStatistics
+                                                                                .bind(this, el[1].wb, `${BOOKS.wb}, 
                                                                         Unit ${el[0]}`, true)}/></div>
-                                            <div>
-                                                {`${textForApp[lang].table[1]}${taskList[`${level}-${el[0]}-wb`]?.length}`}
-                                            </div>
+                                                    <div>
+                                                        {`${textForApp[lang].table[1]}${taskList[`${level}-${el[0]}-wb`]?.length}`}
+                                                    </div>
+                                                </>
+                                                : EMPTY_DATA}
                                         </td>
                                         <td>
                                             {+el[0] % 2
