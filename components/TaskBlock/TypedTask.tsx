@@ -243,7 +243,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                                                   checked={answers?.includes(index + 1)}
                                                   disabled={disabled}
                                                   onChange={(e) => this.onChange.call(this, e, index)}>
-                                            {`${index + 1}. ${parse(el)}`}
+                                            {parse(`${index + 1}. ${el}`)}
                                         </Checkbox>
                                     </Row>;
                                 })}
@@ -270,7 +270,7 @@ export default class TypedTask extends React.PureComponent<ITypedTaskProps, ITyp
                             <div>
                                 {task.content.map((el, i) => {
                                     return <div key={el.question}>
-                                        <div>{`${i + 1}. ${parse(el.question)}`}</div>
+                                        <div>{parse(`${i + 1}. ${el.question}`)}</div>
                                         {el.answers.map((answer, index) => {
                                             return <Radio key={`${i}-${index}-${answer}`}
                                                           value={index + 1}

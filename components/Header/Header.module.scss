@@ -204,6 +204,7 @@ $narrow-width: 560px;
 
   .hidden {
     opacity: 0;
+    pointer-events: none;
   }
 
   @keyframes right {

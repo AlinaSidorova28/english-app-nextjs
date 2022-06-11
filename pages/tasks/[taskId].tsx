@@ -6,7 +6,7 @@ import ConfirmModal from '../../components/Modals/ConfirmModal';
 import NavLink from '../../components/NavLink/NavLink';
 import Spinner from '../../components/Spinner/Spinner';
 import TypedTask from '../../components/TaskBlock/TypedTask';
-import { BOOKS, MAX_UNITS, PERCENT, TASKS_IN_TEST } from '../../constants/constants';
+import { BOOKS, PERCENT, TASKS_IN_TEST } from '../../constants/constants';
 import textForApp from '../../constants/translate';
 import Task from '../../models/Task';
 import style from '../../styles/Tasks.module.scss';
@@ -64,7 +64,7 @@ const Tasks = ({ settings, lang }) => {
     const getModuleName = async () => {
         const splited = (taskId as string)?.split('-') ?? '';
         if (splited.length !== 3
-            || +splited[1] <= 0 || +splited[1] > MAX_UNITS
+            || +splited[1] <= 0
             || !Object.keys(BOOKS).includes(splited[2])) {
             setModuleName(null);
         } else {

@@ -78,17 +78,20 @@ export default class TaskBlock extends React.PureComponent<ITaskBlockProps, ITas
                                           key: `sb-${index + 1}`,
                                           className: 'task-item',
                                       },
-                                      {
-                                          label: <NavLink href={`/tasks/${unit.wb}`}>
-                                              <a>{BOOKS.wb}</a>
-                                          </NavLink>,
-                                          key: `wb-${index + 1}`,
-                                          className: 'task-item',
-                                      },
                                   ],
                               };
 
-                              if (index % 2) {
+                              if (unit.wb) {
+                                  item.children.push({
+                                      label: <NavLink href={`/tasks/${unit.wb}`}>
+                                          <a>{BOOKS.wb}</a>
+                                      </NavLink>,
+                                      key: `wb-${index + 1}`,
+                                      className: 'task-item',
+                                  });
+                              }
+
+                              if (unit.tb) {
                                   item.children.push({
                                       label: <NavLink href={`/tasks/${unit.tb}`}>
                                           <a>{`${BOOKS.tb} ${index}-${index + 1}`}</a>
