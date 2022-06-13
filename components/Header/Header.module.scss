@@ -26,10 +26,13 @@ $narrow-width: 560px;
     right: 3.33%;
     top: 20px;
     filter: opacity(0.5);
-    cursor: pointer;
     width: 25px;
     height: 25px;
     z-index: 50;
+
+    @media (max-width: $narrow-width) {
+      cursor: pointer;
+    }
   }
 
   .burger {
