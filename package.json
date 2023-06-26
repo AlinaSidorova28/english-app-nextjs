@@ -11,6 +11,9 @@
     "stylelint": "stylelint **/*.*css > ./stylelint-report.log",
     "stylelint:fix": "stylelint **/*.*css --fix"
   },
+  "engines" : {
+    "node" : ">=16.0.0 <17.0.0"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
